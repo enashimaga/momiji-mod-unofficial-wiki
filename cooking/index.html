@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>もみじMOD 料理帖｜料理・カレーのレシピ一覧 - もみじMOD 非公式Wiki</title>
+<meta name="description" content="もみじMOD（MapleTree）の非公式ファンWiki。Minecraft 1.7.10 版 v1.1.33c の料理・食材のレシピ、調理鍋・石臼・すり鉢の使い方、カレースパイスの配合、満腹度と効果をまとめた料理帖。">
+<link rel="canonical" href="https://enashimaga.github.io/momiji-mod-unofficial-wiki/cooking/">
+<meta property="og:type" content="article">
+<meta property="og:site_name" content="もみじMOD 非公式Wiki">
+<meta property="og:title" content="もみじMOD 料理帖">
+<meta property="og:description" content="もみじMOD（MapleTree / Minecraft 1.7.10）の料理・カレーのレシピをまとめた非公式の料理帖。">
+<meta property="og:url" content="https://enashimaga.github.io/momiji-mod-unofficial-wiki/cooking/">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:card" content="summary">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
+<style>
+/* Layout: one reading column (max 1080px), tab bar under a compact masthead; recipe cards in an auto-fill grid */
+:root{
+  --paper:#f3f4f0; --card:#ffffff; --ink:#24262a; --muted:#6a6e66; --line:#dadcd4;
+  --maple:#b5382c; --maple-soft:#f6e3df; --amber:#b9790f; --amber-soft:#f7ecd6; --leaf:#4f7a3a; --leaf-soft:#e3eddc;
+  --display:"Dela Gothic One","Hiragino Sans","Yu Gothic",sans-serif;
+  --body:"Zen Maru Gothic","Hiragino Maru Gothic ProN","Yu Gothic",sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#161716; --card:#1f201e; --ink:#ebeae4; --muted:#a2a39b; --line:#34362f;
+  --maple:#e46c5d; --maple-soft:#3a201c; --amber:#e0a84a; --amber-soft:#35291a; --leaf:#8fbf73; --leaf-soft:#1f2b1a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#161716; --card:#1f201e; --ink:#ebeae4; --muted:#a2a39b; --line:#34362f;
+  --maple:#e46c5d; --maple-soft:#3a201c; --amber:#e0a84a; --amber-soft:#35291a; --leaf:#8fbf73; --leaf-soft:#1f2b1a; color-scheme:dark}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:15px;line-height:1.7}
+.wrap{max-width:1080px;margin:0 auto;padding-inline:16px;padding-block:28px 64px}
+header.mast{display:flex;flex-wrap:wrap;align-items:flex-end;gap:8px 20px;justify-content:space-between}
+h1{font-family:var(--display);font-weight:400;font-size:clamp(28px,5vw,40px);line-height:1.2;margin:0;letter-spacing:.02em;text-wrap:balance}
+h1 .leaf{color:var(--maple)}
+.meta{color:var(--muted);font-size:13px}
+.lede{max-width:65ch;margin:12px 0 0;color:var(--muted)}
+nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);display:flex;gap:4px;overflow-x:auto;margin:24px 0 20px;border-bottom:1px solid var(--line)}
+nav.tabs button{font:inherit;font-weight:700;background:none;border:0;color:var(--muted);padding:10px 14px;cursor:pointer;border-bottom:3px solid transparent;white-space:nowrap}
+nav.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--maple)}
+button:focus-visible,input:focus-visible,a:focus-visible{outline:2px solid var(--maple);outline-offset:2px}
+h2{font-family:var(--display);font-weight:400;font-size:22px;margin:32px 0 8px;text-wrap:balance}
+h3{font-size:16px;margin:0}
+p{max-width:65ch}
+.toolbar{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-bottom:16px}
+.toolbar input{font:inherit;flex:1 1 240px;min-width:0;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:inherit;font-size:13px;padding:5px 11px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.count{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px}
+.dish{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-direction:column;gap:10px;min-width:0}
+.dish header{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.dish h3{font-size:17px}
+.stats{display:flex;flex-wrap:wrap;gap:6px 12px;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums}
+.shanks{color:var(--amber);letter-spacing:-1px}
+.eff{display:inline-block;font-size:12px;padding:1px 8px;border-radius:4px;background:var(--leaf-soft);color:var(--leaf)}
+.way{border-top:1px dashed var(--line);padding-top:8px;display:flex;flex-direction:column;gap:6px}
+.way:first-of-type{border-top:0;padding-top:0}
+.method{display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:700}
+.tag{padding:1px 8px;border-radius:4px;background:var(--amber-soft);color:var(--amber)}
+.tag.pot{background:var(--maple-soft);color:var(--maple)}
+.tag.bad{background:var(--line);color:var(--muted);text-decoration:line-through}
+.sub{font-weight:400;color:var(--muted)}
+.ings{display:flex;flex-wrap:wrap;gap:4px 6px;font-size:14px}
+.ing{font:inherit;font-size:14px;background:none;border:0;padding:0;color:var(--ink);cursor:pointer;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.ing:hover{text-decoration-color:var(--maple)}
+.ing .x{color:var(--muted);font-variant-numeric:tabular-nums}
+.plus{color:var(--muted)}
+.note{font-size:13px;color:var(--muted);margin:0}
+.note.warn{color:var(--maple)}
+.cgrid{display:inline-grid;grid-template-columns:repeat(3,auto);gap:2px;font-size:11px;margin-top:2px}
+.cgrid span{border:1px solid var(--line);border-radius:3px;min-width:44px;min-height:22px;padding:1px 4px;text-align:center;color:var(--muted)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px;background:var(--card)}
+table{border-collapse:collapse;width:100%;font-size:13.5px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+th{font-size:12px;color:var(--muted);font-weight:700;letter-spacing:.04em;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.num{text-align:right;white-space:nowrap}
+.flow{display:flex;flex-wrap:wrap;align-items:stretch;gap:8px;margin:12px 0 4px}
+.step{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;flex:1 1 150px;min-width:0}
+.step b{display:block}
+.step small{color:var(--muted);font-size:12.5px;line-height:1.5;display:block}
+.arrow{align-self:center;color:var(--maple);font-weight:700}
+.callout{border-left:4px solid var(--maple);background:var(--card);padding:10px 14px;border-radius:0 8px 8px 0;margin:14px 0;max-width:75ch}
+.callout p{margin:0}
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;min-width:0}
+.box h3{margin-bottom:6px}
+.box ul{margin:0;padding-left:1.2em}
+.box li{margin:2px 0}
+.toolgrid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-auto-flow:row dense;gap:10px;margin-top:10px}
+.tile{font:inherit;text-align:left;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;cursor:pointer;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile b{font-size:15.5px}
+@media (max-width:860px){.toolgrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile .tsum{font-size:12.5px;line-height:1.55;color:var(--muted);flex:1}
+.tile .tcount{font-size:12px;color:var(--maple);font-weight:700}
+.tile:hover{border-color:var(--muted)}
+.tile[aria-expanded="true"]{border-color:var(--maple);box-shadow:inset 0 -3px 0 var(--maple)}
+.tpanel{grid-column:1/-1;background:var(--card);border:1px solid var(--maple);border-radius:10px;padding:14px 18px 16px;min-width:0}
+.tpanel header{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.tpanel h3{font-size:18px}
+.tclose{font:inherit;background:none;border:1px solid var(--line);color:var(--muted);border-radius:999px;width:32px;height:32px;cursor:pointer}
+.tclose:hover{color:var(--maple);border-color:var(--maple)}
+.tbody{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 28px}
+@media (max-width:720px){.tbody{grid-template-columns:minmax(0,1fr)}}
+.tpanel h4{font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:12px 0 4px}
+.tpanel ul{margin:0;padding-left:1.2em}
+.tpanel li{margin:2px 0}
+.tpanel .sub{font-weight:400}
+.rlinks{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.rlink{font-size:13px;padding:2px 10px;border-radius:999px;border:1px solid var(--line);color:var(--ink);text-decoration:none;white-space:nowrap}
+.rlink:hover{border-color:var(--maple);color:var(--maple)}
+.rlink.bad{color:var(--muted);text-decoration:line-through}
+#toolBoxes{align-items:stretch}
+.dish{scroll-margin-top:72px}
+.dish.flash{border-color:var(--maple);box-shadow:0 0 0 3px var(--maple-soft)}
+.blend{display:flex;flex-wrap:wrap;gap:3px 8px}
+.blend span{white-space:nowrap}
+.range{color:var(--muted);font-size:12px;white-space:nowrap}
+footer{margin-top:48px;color:var(--muted);font-size:12.5px;max-width:75ch}
+footer .credit{margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+footer a{color:inherit}
+.topbar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 16px;margin-bottom:18px;font-size:13px}
+.crumb{display:flex;flex-wrap:wrap;align-items:center;gap:8px;color:var(--muted)}
+.crumb a{color:inherit}
+.badge{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.08em;padding:1px 8px;border-radius:4px;border:1px solid var(--maple);color:var(--maple)}
+.towiki{display:inline-flex;align-items:center;gap:6px;font-weight:700;text-decoration:none;color:var(--paper);background:var(--ink);padding:7px 14px;border-radius:999px}
+.towiki:hover{background:var(--maple)}
+.empty{grid-column:1/-1}
+#oreTable td:nth-child(-n+2){white-space:nowrap}
+#oreTable code{overflow-wrap:normal}
+code{font-family:ui-monospace,"Cascadia Mono",Consolas,monospace;font-size:.88em;background:var(--card);border:1px solid var(--line);padding:0 5px;border-radius:4px;overflow-wrap:anywhere}
+@media (prefers-reduced-motion:no-preference){.dish{transition:border-color .15s}.dish:hover{border-color:var(--muted)}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="crumb"><a href="../">もみじMOD 非公式Wiki</a><span aria-hidden="true">›</span><span>料理帖</span><span class="badge">非公式</span></div>
+    <a class="towiki" href="../">非公式Wiki へ <span aria-hidden="true">→</span></a>
+  </div>
+  <header class="mast">
+    <div>
+      <h1><span class="leaf">もみじ</span>MOD 料理帖</h1>
+      <p class="lede">もみじMOD（MapleTree Forge v1.1.33c／Minecraft 1.7.10）の料理・食材・カレーのレシピ集。調理鍋・石臼・すり鉢のレシピからカレースパイスの配合までを、ゲーム内データをもとにまとめた非公式のページ。</p>
+    </div>
+    <div class="meta" id="summary">レシピ 208 件 ／ 料理 107 品</div>
+  </header>
+
+  <nav class="tabs" role="tablist">
+    <button role="tab" id="tab-dishes" aria-selected="true" data-panel="dishes">料理とレシピ</button>
+    <button role="tab" id="tab-curry" aria-selected="false" data-panel="curry">カレー工房</button>
+    <button role="tab" id="tab-tools" aria-selected="false" data-panel="tools">道具と加工</button>
+    <button role="tab" id="tab-source" aria-selected="false" data-panel="source">素材の入手</button>
+  </nav>
+
+  <section id="dishes" role="tabpanel">
+    <div class="toolbar">
+      <input id="q" type="search" placeholder="料理名・材料で検索（例：カツオ、醤油、うどん）" aria-label="料理名・材料で検索">
+      <div class="chips" id="filters">
+        <button class="chip" data-f="eat" aria-pressed="true">食べられる料理</button>
+        <button class="chip" data-f="prep" aria-pressed="false">下ごしらえ・調味料</button>
+        <button class="chip" data-f="all" aria-pressed="false">すべて</button>
+      </div>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="grid" id="list"><article class="dish" id="r-LEEカレー" data-name="LEEカレー" data-ings="LEEカレールゥ
+タマネギ
+生の牛肉" data-food="1"><header><h3>LEEカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="LEEカレールゥ">LEEカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button></div></div></article>
+<article class="dish" id="r-ZEPPINカレー" data-name="ZEPPINカレー" data-ings="ZEPPINカレールゥ
+ジャガイモ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>ZEPPINカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ZEPPINカレールゥ">ZEPPINカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-あんこ" data-name="あんこ" data-ings="あずき豆
+砂糖" data-food="1"><header><h3>あんこ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒</span></div><div class="ings"><button class="ing" data-q="あずき豆">あずき豆</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div></article>
+<article class="dish" id="r-イカフライ" data-name="イカフライ" data-ings="パン粉
+生のイカ" data-food="1"><header><h3>イカフライ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 7.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・10秒・2個できる</span></div><div class="ings"><button class="ing" data-q="生のイカ">生のイカ</button><span class="plus">＋</span><button class="ing" data-q="パン粉">パン粉</button></div></div></article>
+<article class="dish" id="r-いかめし" data-name="いかめし" data-ings="生のイカ
+砂糖
+醤油
+餅米(鉱石辞書 rice)" data-food="1"><header><h3>いかめし</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 9.6</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・10秒</span></div><div class="ings"><button class="ing" data-q="生のイカ">生のイカ</button><span class="plus">＋</span><button class="ing" data-q="餅米(鉱石辞書 rice)">餅米(鉱石辞書 rice)</button><span class="plus">＋</span><button class="ing" data-q="醤油">醤油</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div></article>
+<article class="dish" id="r-うどんつゆ" data-name="うどんつゆ" data-ings="乾燥昆布
+削り節
+砂糖
+醤油(鉱石辞書 foodSoysauce)" data-food="0"><header><h3>うどんつゆ</h3></header><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・30秒</span></div><div class="ings"><button class="ing" data-q="乾燥昆布">乾燥昆布</button><span class="plus">＋</span><button class="ing" data-q="削り節">削り節</button><span class="plus">＋</span><button class="ing" data-q="醤油(鉱石辞書 foodSoysauce)">醤油(鉱石辞書 foodSoysauce)</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div></article>
+<article class="dish" id="r-エビフライ" data-name="エビフライ" data-ings="パン粉
+生のエビ" data-food="1"><header><h3>エビフライ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 7.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・10秒</span></div><div class="ings"><button class="ing" data-q="生のエビ">生のエビ</button><span class="plus">＋</span><button class="ing" data-q="パン粉">パン粉</button></div></div></article>
+<article class="dish" id="r-おでん" data-name="おでん" data-ings="卵
+大根
+魚のすり身" data-food="1"><header><h3>おでん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 7.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・15秒</span></div><div class="ings"><button class="ing" data-q="魚のすり身">魚のすり身</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="大根">大根</button></div></div></article>
+<article class="dish" id="r-カレー" data-name="カレー" data-ings="カレースパイス
+ジャガイモ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>カレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="stats"><span class="eff">火炎耐性 I・3分</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="カレースパイス">カレースパイス</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-カレー曜日" data-name="カレー曜日" data-ings="カレー曜日ルゥ
+ジャガイモ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>カレー曜日</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="カレー曜日ルゥ">カレー曜日ルゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-ククレカレー" data-name="ククレカレー" data-ings="ククレカレールゥ
+ジャガイモ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>ククレカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ククレカレールゥ">ククレカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-こくまろカレー" data-name="こくまろカレー" data-ings="こくまろカレールゥ
+ジャガイモ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>こくまろカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="こくまろカレールゥ">こくまろカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-コロッケ" data-name="コロッケ" data-ings="ハンバーグミート
+パン粉
+マッシュポテト" data-food="1"><header><h3>コロッケ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・10秒・2個できる</span></div><div class="ings"><button class="ing" data-q="マッシュポテト">マッシュポテト</button><span class="plus">＋</span><button class="ing" data-q="パン粉">パン粉</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグミート">ハンバーグミート</button></div></div></article>
+<article class="dish" id="r-ゴールデンカレー" data-name="ゴールデンカレー" data-ings="ゴールデンカレールゥ
+ジャガイモ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>ゴールデンカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot bad">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ゴールデンカレールゥ">ゴールデンカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div><p class="note warn">このバージョンでは作れない（調理鍋のレシピ枠が43個しかなく、後から登録された銀座カリーに上書きされる）</p></div></article>
+<article class="dish" id="r-ザ・ホテル・カレー" data-name="ザ・ホテル・カレー" data-ings="ザ・ホテル・カレールゥ
+タマネギ
+生の牛肉" data-food="1"><header><h3>ザ・ホテル・カレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ザ・ホテル・カレールゥ">ザ・ホテル・カレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button></div></div></article>
+<article class="dish" id="r-ジャワカレー" data-name="ジャワカレー" data-ings="ジャガイモ
+ジャワカレールゥ
+タマネギ
+ニンジン
+生の牛肉" data-food="1"><header><h3>ジャワカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ジャワカレールゥ">ジャワカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-ぜんざい" data-name="ぜんざい" data-ings="あずき豆
+焼き餅
+砂糖" data-food="1"><header><h3>ぜんざい</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 7.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒</span></div><div class="ings"><button class="ing" data-q="あずき豆">あずき豆</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button><span class="plus">＋</span><button class="ing" data-q="焼き餅">焼き餅</button></div></div></article>
+<article class="dish" id="r-ソース" data-name="ソース" data-ings="タマネギ
+トマト
+リンゴ
+岩塩" data-food="0"><header><h3>ソース</h3></header><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒・2個できる</span></div><div class="ings"><button class="ing" data-q="トマト">トマト</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="リンゴ">リンゴ</button></div></div></article>
+<article class="dish" id="r-ディナーカレー" data-name="ディナーカレー" data-ings="ジャガイモ
+タマネギ
+ディナーカレールゥ
+ニンジン
+生の牛肉" data-food="1"><header><h3>ディナーカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot bad">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ディナーカレールゥ">ディナーカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div><p class="note warn">このバージョンでは作れない（調理鍋のレシピ枠が43個しかなく、後から登録された銀座カリーに上書きされる）</p></div></article>
+<article class="dish" id="r-トマトケチャップ" data-name="トマトケチャップ" data-ings="タマネギ
+トマト
+岩塩
+砂糖" data-food="0"><header><h3>トマトケチャップ</h3></header><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒・2個できる</span></div><div class="ings"><button class="ing" data-q="トマト">トマト</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div></article>
+<article class="dish" id="r-トンカツ" data-name="トンカツ" data-ings="パン粉
+生の豚肉
+黒胡椒" data-food="1"><header><h3>トンカツ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 6.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・10秒</span></div><div class="ings"><button class="ing" data-q="生の豚肉">生の豚肉</button><span class="plus">＋</span><button class="ing" data-q="パン粉">パン粉</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒</button></div></div></article>
+<article class="dish" id="r-ドライキーマカレー" data-name="ドライキーマカレー" data-ings="ドライキーマカレールゥ
+ハンバーグミート" data-food="1"><header><h3>ドライキーマカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ドライキーマカレールゥ">ドライキーマカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグミート">ハンバーグミート</button></div></div></article>
+<article class="dish" id="r-バーモントカレー" data-name="バーモントカレー" data-ings="ジャガイモ
+タマネギ
+ニンジン
+バーモントカレールゥ
+生の牛肉" data-food="1"><header><h3>バーモントカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="バーモントカレールゥ">バーモントカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-フライドポテト" data-name="フライドポテト" data-ings="ジャガイモ
+岩塩" data-food="1"><header><h3>フライドポテト</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・10秒・3個できる</span></div><div class="ings"><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button></div></div></article>
+<article class="dish" id="r-ホワイトシチュー" data-name="ホワイトシチュー" data-ings="タマネギ
+ニンジン
+ホワイトソース
+生の鶏肉
+茶キノコ" data-food="1"><header><h3>ホワイトシチュー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="stats"><span class="eff">即時回復 I</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・35秒</span></div><div class="ings"><button class="ing" data-q="ホワイトソース">ホワイトソース</button><span class="plus">＋</span><button class="ing" data-q="生の鶏肉">生の鶏肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="茶キノコ">茶キノコ</button></div></div></article>
+<article class="dish" id="r-ホワイトソース" data-name="ホワイトソース" data-ings="小麦粉
+岩塩
+牛乳180
+白胡椒" data-food="1"><header><h3>ホワイトソース</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・15秒</span></div><div class="ings"><button class="ing" data-q="牛乳180">牛乳180</button><span class="plus">＋</span><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒</button></div></div></article>
+<article class="dish" id="r-ボンカレー" data-name="ボンカレー" data-ings="ジャガイモ
+タマネギ
+ニンジン
+ボンカレールゥ
+生の牛肉" data-food="1"><header><h3>ボンカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot bad">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="ボンカレールゥ">ボンカレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div><p class="note warn">このバージョンでは作れない（調理鍋のレシピ枠が43個しかなく、後から登録された銀座カリーに上書きされる）</p></div></article>
+<article class="dish" id="r-マッシュポテト" data-name="マッシュポテト" data-ings="ジャガイモ
+牛乳180" data-food="1"><header><h3>マッシュポテト</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・15秒</span></div><div class="ings"><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button></div></div></article>
+<article class="dish" id="r-ミートソース" data-name="ミートソース" data-ings="トマトケチャップ
+ニンジン
+ハンバーグミート
+岩塩" data-food="0"><header><h3>ミートソース</h3></header><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒・2個できる</span></div><div class="ings"><button class="ing" data-q="トマトケチャップ">トマトケチャップ</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグミート">ハンバーグミート</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button></div></div></article>
+<article class="dish" id="r-ロールキャベツ" data-name="ロールキャベツ" data-ings="キャベツ
+トマトケチャップ
+ハンバーグミート
+岩塩
+白胡椒" data-food="1"><header><h3>ロールキャベツ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="stats"><span class="eff">即時回復 I</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒・2個できる</span></div><div class="ings"><button class="ing" data-q="キャベツ">キャベツ</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグミート">ハンバーグミート</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="トマトケチャップ">トマトケチャップ</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒</button></div></div></article>
+<article class="dish" id="r-印度カレー" data-name="印度カレー" data-ings="ジャガイモ
+タマネギ
+ニンジン
+印度カレールゥ
+生の牛肉" data-food="1"><header><h3>印度カレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="印度カレールゥ">印度カレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-塾カレー" data-name="塾カレー" data-ings="ジャガイモ
+タマネギ
+ニンジン
+塾カレールゥ
+生の牛肉" data-food="1"><header><h3>塾カレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="塾カレールゥ">塾カレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-失敗カレー" data-name="失敗カレー" data-ings="ジャガイモ
+タマネギ
+ニンジン
+失敗カレールゥ
+生の牛肉" data-food="1"><header><h3>失敗カレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="失敗カレールゥ">失敗カレールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button></div></div></article>
+<article class="dish" id="r-揚げ玉" data-name="揚げ玉" data-ings="天ぷらの衣" data-food="0"><header><h3>揚げ玉</h3></header><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・2.5秒・32個できる</span></div><div class="ings"><button class="ing" data-q="天ぷらの衣">天ぷらの衣</button></div></div></article>
+<article class="dish" id="r-栗ご飯" data-name="栗ご飯" data-ings="焼き栗
+餅米(鉱石辞書 rice)" data-food="1"><header><h3>栗ご飯</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 9.6</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="焼き栗">焼き栗</button><span class="plus">＋</span><button class="ing" data-q="餅米(鉱石辞書 rice)">餅米(鉱石辞書 rice)</button></div></div></article>
+<article class="dish" id="r-油揚げ" data-name="油揚げ" data-ings="木綿豆腐" data-food="1"><header><h3>油揚げ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・10秒・2個できる</span></div><div class="ings"><button class="ing" data-q="木綿豆腐">木綿豆腐</button></div></div></article>
+<article class="dish" id="r-海老天" data-name="海老天" data-ings="天ぷらの衣
+生のエビ" data-food="1"><header><h3>海老天</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・5秒</span></div><div class="ings"><button class="ing" data-q="生のエビ">生のエビ</button><span class="plus">＋</span><button class="ing" data-q="天ぷらの衣">天ぷらの衣</button></div></div></article>
+<article class="dish" id="r-炊いた餅米" data-name="炊いた餅米" data-ings="餅米(鉱石辞書 rice)" data-food="1"><header><h3>炊いた餅米</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・30秒</span></div><div class="ings"><button class="ing" data-q="餅米(鉱石辞書 rice)">餅米(鉱石辞書 rice)</button></div></div></article>
+<article class="dish" id="r-焼く前のグラタン" data-name="焼く前のグラタン" data-ings="タマネギ
+チーズ
+ホワイトソース
+マカロニ
+生のエビ" data-food="0"><header><h3>焼く前のグラタン</h3></header><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・15秒</span></div><div class="ings"><button class="ing" data-q="ホワイトソース">ホワイトソース</button><span class="plus">＋</span><button class="ing" data-q="マカロニ">マカロニ</button><span class="plus">＋</span><button class="ing" data-q="生のエビ">生のエビ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="チーズ">チーズ</button></div></div></article>
+<article class="dish" id="r-肉じゃが" data-name="肉じゃが" data-ings="ジャガイモ
+ニンジン
+生の牛肉
+砂糖
+醤油" data-food="1"><header><h3>肉じゃが</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・20秒</span></div><div class="ings"><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button><span class="plus">＋</span><button class="ing" data-q="醤油">醤油</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div></article>
+<article class="dish" id="r-茹でたうどん" data-name="茹でたうどん" data-ings="生うどん" data-food="1"><header><h3>茹でたうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・10秒</span></div><div class="ings"><button class="ing" data-q="生うどん">生うどん</button></div></div></article>
+<article class="dish" id="r-茹でたそば" data-name="茹でたそば" data-ings="生そば" data-food="1"><header><h3>茹でたそば</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・5秒</span></div><div class="ings"><button class="ing" data-q="生そば">生そば</button></div></div></article>
+<article class="dish" id="r-赤飯" data-name="赤飯" data-ings="あずき豆
+岩塩
+砂糖
+餅米" data-food="1"><header><h3>赤飯</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 9.6</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="あずき豆">あずき豆</button><span class="plus">＋</span><button class="ing" data-q="餅米">餅米</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button></div></div></article>
+<article class="dish" id="r-銀座カリー" data-name="銀座カリー" data-ings="タマネギ
+生の牛肉
+銀座カリールゥ" data-food="1"><header><h3>銀座カリー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・40秒</span></div><div class="ings"><button class="ing" data-q="銀座カリールゥ">銀座カリールゥ</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button></div></div></article>
+<article class="dish" id="r-風呂吹き大根" data-name="風呂吹き大根" data-ings="味噌
+大根" data-food="1"><header><h3>風呂吹き大根</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 7.2</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">水・15秒</span></div><div class="ings"><button class="ing" data-q="大根">大根</button><span class="plus">＋</span><button class="ing" data-q="味噌">味噌</button></div></div></article>
+<article class="dish" id="r-鳥の唐揚げ" data-name="鳥の唐揚げ" data-ings="岩塩
+生の鶏肉
+黒胡椒" data-food="1"><header><h3>鳥の唐揚げ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 6.4</span></div><div class="way"><div class="method"><span class="tag pot">調理鍋</span><span class="sub">菜種油で揚げる・15秒</span></div><div class="ings"><button class="ing" data-q="生の鶏肉">生の鶏肉</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒</button></div></div></article>
+<article class="dish" id="r-LEEカレースパイス" data-name="LEEカレースパイス" data-ings="カルダモン
+クミン
+スターアニス
+ターメリック
+唐辛子
+白胡椒
+黒胡椒" data-food="0"><header><h3>LEEカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">6個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×10</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×17</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒<span class=x> ×13</span></button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×6</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-LEEカレーライス" data-name="LEEカレーライス" data-ings="LEEカレー
+炊いた餅米" data-food="1"><header><h3>LEEカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span><span class="eff">火炎耐性 II・5分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="LEEカレー">LEEカレー</button></div></div></article>
+<article class="dish" id="r-LEEカレールゥ" data-name="LEEカレールゥ" data-ings="LEEカレースパイス" data-food="0"><header><h3>LEEカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="LEEカレースパイス">LEEカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-ZEPPINカレースパイス" data-name="ZEPPINカレースパイス" data-ings="カルダモン
+クミン
+クローブ
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>ZEPPINカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン</button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="クローブ">クローブ</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×7</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×13</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ZEPPINカレーライス" data-name="ZEPPINカレーライス" data-ings="ZEPPINカレー
+炊いた餅米" data-food="1"><header><h3>ZEPPINカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span><span class="eff">暗視 II・5分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ZEPPINカレー">ZEPPINカレー</button></div></div></article>
+<article class="dish" id="r-ZEPPINカレールゥ" data-name="ZEPPINカレールゥ" data-ings="ZEPPINカレースパイス" data-food="0"><header><h3>ZEPPINカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ZEPPINカレースパイス">ZEPPINカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-おはぎ" data-name="おはぎ" data-ings="あんこ
+炊いた餅米" data-food="1"><header><h3>おはぎ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="あんこ">あんこ</button></div></div></article>
+<article class="dish" id="r-オムライス" data-name="オムライス" data-ings="タマネギ
+トマトケチャップ
+卵
+炊いた餅米
+生の鶏肉" data-food="1"><header><h3>オムライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="生の鶏肉">生の鶏肉</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="トマトケチャップ">トマトケチャップ</button></div></div></article>
+<article class="dish" id="r-おろしたカツオ" data-name="おろしたカツオ" data-ings="カツオ" data-food="0"><header><h3>おろしたカツオ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="カツオ">カツオ</button></div></div></article>
+<article class="dish" id="r-おろし蕎麦" data-name="おろし蕎麦" data-ings="うどんつゆ
+ネギ
+大根
+茹でたそば" data-food="1"><header><h3>おろし蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="大根">大根</button></div></div></article>
+<article class="dish" id="r-オールスパイス" data-name="オールスパイス" data-ings="オールスパイスの種" data-food="0"><header><h3>オールスパイス</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="オールスパイスの種">オールスパイスの種</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-お好み焼き" data-name="お好み焼き" data-ings="お好み焼きの生地" data-food="1"><header><h3>お好み焼き</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 6.4</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="お好み焼きの生地">お好み焼きの生地</button></div></div></article>
+<article class="dish" id="r-お好み焼きの生地" data-name="お好み焼きの生地" data-ings="キャベツ
+卵
+小麦粉
+生の豚肉" data-food="0"><header><h3>お好み焼きの生地</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="キャベツ">キャベツ</button><span class="plus">＋</span><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="生の豚肉">生の豚肉</button></div></div></article>
+<article class="dish" id="r-かけ蕎麦" data-name="かけ蕎麦" data-ings="うどんつゆ
+ネギ
+茹でたそば" data-food="1"><header><h3>かけ蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button></div></div></article>
+<article class="dish" id="r-かしわうどん" data-name="かしわうどん" data-ings="うどんつゆ
+ネギ
+焼き鳥
+茹でたうどん" data-food="1"><header><h3>かしわうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="焼き鳥">焼き鳥</button></div></div></article>
+<article class="dish" id="r-かつおのたたき" data-name="かつおのたたき" data-ings="カツオ
+ネギ
+大根" data-food="1"><header><h3>かつおのたたき</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●◐</span><span>満腹度 3</span><span>隠し満腹度 3.6</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">2個できる</span></div><div class="ings"><button class="ing" data-q="大根">大根</button><span class="plus">＋</span><button class="ing" data-q="カツオ">カツオ</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button></div></div></article>
+<article class="dish" id="r-かつお節" data-name="かつお節" data-ings="煮熟したカツオ
+燻したカツオ" data-food="1"><header><h3>かつお節</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.6</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="煮熟したカツオ">煮熟したカツオ</button></div></div><div class="way"><div class="method"><span class="tag">天日干し網</span><span class="sub">9個できる</span></div><div class="ings"><button class="ing" data-q="燻したカツオ">燻したカツオ<span class=x> ×9</span></button></div><p class="note">晴れた昼に空の見える明るい場所で 2400 カウント（約4.2日）。壊して回収</p></div></article>
+<article class="dish" id="r-カツカレー" data-name="カツカレー" data-ings="カレーライス
+トンカツ" data-food="1"><header><h3>カツカレー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●</span><span>満腹度 16</span><span>隠し満腹度 25.6</span></div><div class="stats"><span class="eff">即時回復 II</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="カレーライス">カレーライス</button><span class="plus">＋</span><button class="ing" data-q="トンカツ">トンカツ</button></div></div></article>
+<article class="dish" id="r-カルダモン" data-name="カルダモン" data-ings="カルダモンの実" data-food="0"><header><h3>カルダモン</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="カルダモンの実">カルダモンの実</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-カレーうどん" data-name="カレーうどん" data-ings="うどんつゆ
+カレー
+ネギ
+茹でたうどん" data-food="1"><header><h3>カレーうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●</span><span>満腹度 16</span><span>隠し満腹度 25.6</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="カレー">カレー</button></div></div></article>
+<article class="dish" id="r-カレーライス" data-name="カレーライス" data-ings="カレー
+炊いた餅米" data-food="1"><header><h3>カレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●</span><span>満腹度 12</span><span>隠し満腹度 19.2</span></div><div class="stats"><span class="eff">即時回復 II</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="カレー">カレー</button><span class="plus">＋</span><button class="ing" data-q="炊いた餅米">炊いた餅米</button></div></div></article>
+<article class="dish" id="r-カレー曜日スパイス" data-name="カレー曜日スパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>カレー曜日スパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">5個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン</button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×6</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×15</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×11</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-カレー曜日ライス" data-name="カレー曜日ライス" data-ings="カレー曜日
+炊いた餅米" data-food="1"><header><h3>カレー曜日ライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span><span class="eff">火炎耐性 III・10分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="カレー曜日">カレー曜日</button></div></div></article>
+<article class="dish" id="r-カレー曜日ルゥ" data-name="カレー曜日ルゥ" data-ings="カレー曜日スパイス" data-food="0"><header><h3>カレー曜日ルゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="カレー曜日スパイス">カレー曜日スパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-きつねうどん" data-name="きつねうどん" data-ings="うどんつゆ
+ネギ
+油揚げ
+茹でたうどん" data-food="1"><header><h3>きつねうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="油揚げ">油揚げ</button></div></div></article>
+<article class="dish" id="r-きつね蕎麦" data-name="きつね蕎麦" data-ings="うどんつゆ
+ネギ
+油揚げ
+茹でたそば" data-food="1"><header><h3>きつね蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="油揚げ">油揚げ</button></div></div></article>
+<article class="dish" id="r-ククレカレースパイス" data-name="ククレカレースパイス" data-ings="クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>ククレカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">3個できる</span></div><div class="ings"><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×7</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×9</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ククレカレーライス" data-name="ククレカレーライス" data-ings="ククレカレー
+炊いた餅米" data-food="1"><header><h3>ククレカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">攻撃力上昇 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ククレカレー">ククレカレー</button></div></div></article>
+<article class="dish" id="r-ククレカレールゥ" data-name="ククレカレールゥ" data-ings="ククレカレースパイス" data-food="0"><header><h3>ククレカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ククレカレースパイス">ククレカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-クミン" data-name="クミン" data-ings="クミンの種" data-food="0"><header><h3>クミン</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="クミンの種">クミンの種</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-クローブ" data-name="クローブ" data-ings="クローブのつぼみ" data-food="0"><header><h3>クローブ</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="クローブのつぼみ">クローブのつぼみ</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-グレープパウンドケーキ" data-name="グレープパウンドケーキ" data-ings="グレープ
+メープルシロップ
+卵
+小麦
+牛乳180" data-food="1"><header><h3>グレープパウンドケーキ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 9.6</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="小麦">小麦</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button><span class="plus">＋</span><button class="ing" data-q="グレープ">グレープ</button></div></div></article>
+<article class="dish" id="r-こくまろカレースパイス" data-name="こくまろカレースパイス" data-ings="カルダモン
+クミン
+スターアニス
+ターメリック
+唐辛子
+白胡椒
+黒胡椒" data-food="0"><header><h3>こくまろカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×10</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×12</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-こくまろカレーライス" data-name="こくまろカレーライス" data-ings="こくまろカレー
+炊いた餅米" data-food="1"><header><h3>こくまろカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">再生 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="こくまろカレー">こくまろカレー</button></div></div></article>
+<article class="dish" id="r-こくまろカレールゥ" data-name="こくまろカレールゥ" data-ings="こくまろカレースパイス" data-food="0"><header><h3>こくまろカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="こくまろカレースパイス">こくまろカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-コップ一杯の水" data-name="コップ一杯の水" data-ings="モミジ木材のかけら
+水バケツ" data-food="0"><header><h3>コップ一杯の水</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">32個できる</span></div><div class="ings"><button class="ing" data-q="水バケツ">水バケツ</button><span class="plus">＋</span><button class="ing" data-q="モミジ木材のかけら">モミジ木材のかけら</button></div></div></article>
+<article class="dish" id="r-コリアンダー" data-name="コリアンダー" data-ings="コリアンダーの種" data-food="0"><header><h3>コリアンダー</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="コリアンダーの種">コリアンダーの種</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-コロッケうどん" data-name="コロッケうどん" data-ings="うどんつゆ
+コロッケ
+ネギ
+茹でたうどん" data-food="1"><header><h3>コロッケうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●</span><span>満腹度 16</span><span>隠し満腹度 25.6</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="コロッケ">コロッケ</button></div></div></article>
+<article class="dish" id="r-コロッケ蕎麦" data-name="コロッケ蕎麦" data-ings="うどんつゆ
+コロッケ
+ネギ
+茹でたそば" data-food="1"><header><h3>コロッケ蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="コロッケ">コロッケ</button></div></div></article>
+<article class="dish" id="r-ゴールデンカレースパイス" data-name="ゴールデンカレースパイス" data-ings="カルダモン
+クミン
+クローブ
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>ゴールデンカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">5個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="クローブ">クローブ<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×12</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×11</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ゴールデンカレーライス" data-name="ゴールデンカレーライス" data-ings="ゴールデンカレー
+炊いた餅米" data-food="1"><header><h3>ゴールデンカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●●●●●●●●●●●</span><span>満腹度 40</span><span>隠し満腹度 64</span></div><div class="stats"><span class="eff">再生 III・10分</span><span class="eff">攻撃力上昇 III・10分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ゴールデンカレー">ゴールデンカレー</button></div></div></article>
+<article class="dish" id="r-ゴールデンカレールゥ" data-name="ゴールデンカレールゥ" data-ings="ゴールデンカレースパイス" data-food="0"><header><h3>ゴールデンカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ゴールデンカレースパイス">ゴールデンカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-ざる蕎麦" data-name="ざる蕎麦" data-ings="うどんつゆ
+茹でたそば" data-food="1"><header><h3>ざる蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button></div></div></article>
+<article class="dish" id="r-ザ・ホテル・カレースパイス" data-name="ザ・ホテル・カレースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>ザ・ホテル・カレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">8個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×10</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×13</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×19</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×21</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ザ・ホテル・カレーライス" data-name="ザ・ホテル・カレーライス" data-ings="ザ・ホテル・カレー
+炊いた餅米" data-food="1"><header><h3>ザ・ホテル・カレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">攻撃力上昇 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ザ・ホテル・カレー">ザ・ホテル・カレー</button></div></div></article>
+<article class="dish" id="r-ザ・ホテル・カレールゥ" data-name="ザ・ホテル・カレールゥ" data-ings="ザ・ホテル・カレースパイス" data-food="0"><header><h3>ザ・ホテル・カレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ザ・ホテル・カレースパイス">ザ・ホテル・カレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-シナモン" data-name="シナモン" data-ings="シナモンの木の皮" data-food="0"><header><h3>シナモン</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="シナモンの木の皮">シナモンの木の皮</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-ジャワカレースパイス" data-name="ジャワカレースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒
+黒胡椒" data-food="0"><header><h3>ジャワカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">5個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン</button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×6</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×6</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×14</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×14</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ジャワカレーライス" data-name="ジャワカレーライス" data-ings="ジャワカレー
+炊いた餅米" data-food="1"><header><h3>ジャワカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">再生 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ジャワカレー">ジャワカレー</button></div></div></article>
+<article class="dish" id="r-ジャワカレールゥ" data-name="ジャワカレールゥ" data-ings="ジャワカレースパイス" data-food="0"><header><h3>ジャワカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ジャワカレースパイス">ジャワカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-スターアニス" data-name="スターアニス" data-ings="スターアニスの実" data-food="0"><header><h3>スターアニス</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="スターアニスの実">スターアニスの実</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-スルメ" data-name="スルメ" data-ings="生のイカ" data-food="1"><header><h3>スルメ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag">天日干し網</span><span class="sub">9個できる</span></div><div class="ings"><button class="ing" data-q="生のイカ">生のイカ<span class=x> ×9</span></button></div><p class="note">晴れた昼に空の見える明るい場所で 1800 カウント（約3.2日）。壊して回収</p></div></article>
+<article class="dish" id="r-そば粉" data-name="そば粉" data-ings="そばの種" data-food="0"><header><h3>そば粉</h3></header><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">10秒</span></div><div class="ings"><button class="ing" data-q="そばの種">そばの種</button></div></div></article>
+<article class="dish" id="r-たぬきうどん" data-name="たぬきうどん" data-ings="うどんつゆ
+ネギ
+揚げ玉
+茹でたうどん" data-food="1"><header><h3>たぬきうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="揚げ玉">揚げ玉</button></div></div></article>
+<article class="dish" id="r-たぬき蕎麦" data-name="たぬき蕎麦" data-ings="うどんつゆ
+ネギ
+揚げ玉
+茹でたそば" data-food="1"><header><h3>たぬき蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="揚げ玉">揚げ玉</button></div></div></article>
+<article class="dish" id="r-ターメリック" data-name="ターメリック" data-ings="ターメリックの根" data-food="0"><header><h3>ターメリック</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="ターメリックの根">ターメリックの根</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-チーズ" data-name="チーズ" data-ings="岩塩
+牛乳180" data-food="1"><header><h3>チーズ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button></div></div></article>
+<article class="dish" id="r-チーズ_バーガー" data-name="チーズ バーガー" data-ings="チーズ
+トマト
+トマトケチャップ
+ハンバーグ
+パンズ" data-food="1"><header><h3>チーズ バーガー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="stats"><span class="eff">即時回復 II</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="パンズ">パンズ</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグ">ハンバーグ</button><span class="plus">＋</span><button class="ing" data-q="トマト">トマト</button><span class="plus">＋</span><button class="ing" data-q="チーズ">チーズ</button><span class="plus">＋</span><button class="ing" data-q="トマトケチャップ">トマトケチャップ</button></div></div></article>
+<article class="dish" id="r-ディナーカレースパイス" data-name="ディナーカレースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒
+黒胡椒" data-food="0"><header><h3>ディナーカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">6個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×7</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×21</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×12</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ディナーカレーライス" data-name="ディナーカレーライス" data-ings="ディナーカレー
+炊いた餅米" data-food="1"><header><h3>ディナーカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span><span class="eff">暗視 III・10分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ディナーカレー">ディナーカレー</button></div></div></article>
+<article class="dish" id="r-ディナーカレールゥ" data-name="ディナーカレールゥ" data-ings="ディナーカレースパイス" data-food="0"><header><h3>ディナーカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ディナーカレースパイス">ディナーカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-ドライキーマカレースパイス" data-name="ドライキーマカレースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>ドライキーマカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×6</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×15</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×5</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ドライキーマカレーライス" data-name="ドライキーマカレーライス" data-ings="ドライキーマカレー
+炊いた餅米" data-food="1"><header><h3>ドライキーマカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span><span class="eff">水中呼吸 III・10分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ドライキーマカレー">ドライキーマカレー</button></div></div></article>
+<article class="dish" id="r-ドライキーマカレールゥ" data-name="ドライキーマカレールゥ" data-ings="ドライキーマカレースパイス" data-food="0"><header><h3>ドライキーマカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ドライキーマカレースパイス">ドライキーマカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-ナツメグ" data-name="ナツメグ" data-ings="ナツメグの種" data-food="0"><header><h3>ナツメグ</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="ナツメグの種">ナツメグの種</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-ハンバーグ" data-name="ハンバーグ" data-ings="ハンバーグミート" data-food="1"><header><h3>ハンバーグ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 9.6</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ハンバーグミート">ハンバーグミート</button></div></div></article>
+<article class="dish" id="r-ハンバーグミート" data-name="ハンバーグミート" data-ings="タマネギ
+卵
+小麦粉
+生の牛肉
+生の豚肉" data-food="0"><header><h3>ハンバーグミート</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">3個できる</span></div><div class="ings"><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="生の豚肉">生の豚肉</button><span class="plus">＋</span><button class="ing" data-q="生の牛肉">生の牛肉</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button></div></div></article>
+<article class="dish" id="r-バニラソフトクリーム" data-name="バニラソフトクリーム" data-ings="バニラビーンズ
+小麦
+氷
+牛乳180
+砂糖" data-food="1"><header><h3>バニラソフトクリーム</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="砂糖">砂糖</button><span class="plus">＋</span><button class="ing" data-q="氷">氷</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button><span class="plus">＋</span><button class="ing" data-q="バニラビーンズ">バニラビーンズ</button><span class="plus">＋</span><button class="ing" data-q="小麦">小麦</button></div></div></article>
+<article class="dish" id="r-バニラビーンズ" data-name="バニラビーンズ" data-ings="バニラの莢" data-food="0"><header><h3>バニラビーンズ</h3></header><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="バニラの莢">バニラの莢</button></div></div></article>
+<article class="dish" id="r-バーモントカレースパイス" data-name="バーモントカレースパイス" data-ings="カルダモン
+クミン
+クローブ
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>バーモントカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">6個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン</button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="クローブ">クローブ<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×14</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×13</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×14</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-バーモントカレーライス" data-name="バーモントカレーライス" data-ings="バーモントカレー
+炊いた餅米" data-food="1"><header><h3>バーモントカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">再生 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="バーモントカレー">バーモントカレー</button></div></div></article>
+<article class="dish" id="r-バーモントカレールゥ" data-name="バーモントカレールゥ" data-ings="バーモントカレースパイス" data-food="0"><header><h3>バーモントカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="バーモントカレースパイス">バーモントカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-パンズ" data-name="パンズ" data-ings="パン生地" data-food="1"><header><h3>パンズ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="パン生地">パン生地</button></div></div></article>
+<article class="dish" id="r-パン生地" data-name="パン生地" data-ings="コップ一杯の水
+小麦粉
+岩塩
+水バケツ
+砂糖" data-food="0"><header><h3>パン生地</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">3個できる</span></div><div class="ings"><button class="ing" data-q="小麦粉">小麦粉<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="水バケツ">水バケツ</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">3個できる</span></div><div class="ings"><button class="ing" data-q="小麦粉">小麦粉<span class=x> ×3</span></button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="コップ一杯の水">コップ一杯の水</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button></div></div></article>
+<article class="dish" id="r-パン粉" data-name="パン粉" data-ings="パン
+パンズ" data-food="0"><header><h3>パン粉</h3></header><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">2.5秒</span></div><div class="ings"><button class="ing" data-q="パン">パン</button></div></div><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">2.5秒・3個できる</span></div><div class="ings"><button class="ing" data-q="パンズ">パンズ</button></div></div></article>
+<article class="dish" id="r-フェンネル" data-name="フェンネル" data-ings="フェンネルの種" data-food="0"><header><h3>フェンネル</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="フェンネルの種">フェンネルの種</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-ホットケーキ" data-name="ホットケーキ" data-ings="バニラビーンズ
+メープルシロップ
+卵
+小麦
+牛乳180" data-food="1"><header><h3>ホットケーキ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="小麦">小麦</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button><span class="plus">＋</span><button class="ing" data-q="バニラビーンズ">バニラビーンズ</button></div></div></article>
+<article class="dish" id="r-ボンカレースパイス" data-name="ボンカレースパイス" data-ings="カルダモン
+クミン
+クローブ
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>ボンカレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">2個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="クローブ">クローブ<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン</button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×7</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×2</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-ボンカレーライス" data-name="ボンカレーライス" data-ings="ボンカレー
+炊いた餅米" data-food="1"><header><h3>ボンカレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●●●●●●●●●●●</span><span>満腹度 40</span><span>隠し満腹度 64</span></div><div class="stats"><span class="eff">火炎耐性 III・10分</span><span class="eff">暗視 III・10分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="ボンカレー">ボンカレー</button></div></div></article>
+<article class="dish" id="r-ボンカレールゥ" data-name="ボンカレールゥ" data-ings="ボンカレースパイス" data-food="0"><header><h3>ボンカレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ボンカレースパイス">ボンカレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-マカロニ" data-name="マカロニ" data-ings="パン生地" data-food="0"><header><h3>マカロニ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">16個できる</span></div><div class="ings"><button class="ing" data-q="パン生地">パン生地<span class=x> ×8</span></button></div><div class="cgrid" aria-label="並べ方"><span>パン生地</span><span>パン生地</span><span>パン生地</span><span>パン生地</span><span></span><span>パン生地</span><span>パン生地</span><span>パン生地</span><span>パン生地</span></div></div></article>
+<article class="dish" id="r-マカロニ海老グラタン" data-name="マカロニ海老グラタン" data-ings="焼く前のグラタン" data-food="1"><header><h3>マカロニ海老グラタン</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●</span><span>満腹度 18</span><span>隠し満腹度 28.8</span></div><div class="stats"><span class="eff">即時回復 III</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="焼く前のグラタン">焼く前のグラタン</button></div></div></article>
+<article class="dish" id="r-マヨネーズ" data-name="マヨネーズ" data-ings="卵
+岩塩
+菜種油" data-food="0"><header><h3>マヨネーズ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="菜種油">菜種油</button></div></div></article>
+<article class="dish" id="r-メープルグレープジュース" data-name="メープルグレープジュース" data-ings="ガラス瓶
+グレープ
+メープルシロップ" data-food="0"><header><h3>メープルグレープジュース</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="グレープ">グレープ</button><span class="plus">＋</span><button class="ing" data-q="ガラス瓶">ガラス瓶</button></div></div></article>
+<article class="dish" id="r-メープルグレープジュース+1" data-name="メープルグレープジュース+1" data-ings="ガラス瓶
+グレープ
+グロウストーンダスト
+メープルシロップ" data-food="0"><header><h3>メープルグレープジュース+1</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="グレープ">グレープ</button><span class="plus">＋</span><button class="ing" data-q="ガラス瓶">ガラス瓶</button><span class="plus">＋</span><button class="ing" data-q="グロウストーンダスト">グロウストーンダスト</button></div></div></article>
+<article class="dish" id="r-メープルシロップ" data-name="メープルシロップ" data-ings="シロップ大釜 満タン" data-food="1"><header><h3>メープルシロップ</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag">シロップ大釜</span><span class="sub">1.7分・8個できる</span></div><div class="ings"><button class="ing" data-q="シロップ大釜 満タン">シロップ大釜 満タン</button></div><p class="note">満タンの大釜の真下に焚き火を置くと 100 秒で完成</p></div></article>
+<article class="dish" id="r-メープルプリン" data-name="メープルプリン" data-ings="バニラビーンズ
+メープルシロップ
+卵
+牛乳180" data-food="1"><header><h3>メープルプリン</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button><span class="plus">＋</span><button class="ing" data-q="バニラビーンズ">バニラビーンズ</button></div></div></article>
+<article class="dish" id="r-メープルリンゴジュース" data-name="メープルリンゴジュース" data-ings="ガラス瓶
+メープルシロップ
+リンゴ
+金塊" data-food="0"><header><h3>メープルリンゴジュース</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="リンゴ">リンゴ</button><span class="plus">＋</span><button class="ing" data-q="金塊">金塊</button><span class="plus">＋</span><button class="ing" data-q="ガラス瓶">ガラス瓶</button></div></div></article>
+<article class="dish" id="r-メープルリンゴジュース+1" data-name="メープルリンゴジュース+1" data-ings="ガラス瓶
+グロウストーンダスト
+メープルシロップ
+リンゴ
+金塊" data-food="0"><header><h3>メープルリンゴジュース+1</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="リンゴ">リンゴ</button><span class="plus">＋</span><button class="ing" data-q="金塊">金塊</button><span class="plus">＋</span><button class="ing" data-q="ガラス瓶">ガラス瓶</button><span class="plus">＋</span><button class="ing" data-q="グロウストーンダスト">グロウストーンダスト</button></div></div></article>
+<article class="dish" id="r-モズチーズバーガー" data-name="モズチーズバーガー" data-ings="チーズ
+トマト
+ハンバーグ
+パンズ
+ミートソース" data-food="1"><header><h3>モズチーズバーガー</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="パンズ">パンズ</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグ">ハンバーグ</button><span class="plus">＋</span><button class="ing" data-q="トマト">トマト</button><span class="plus">＋</span><button class="ing" data-q="チーズ">チーズ</button><span class="plus">＋</span><button class="ing" data-q="ミートソース">ミートソース</button></div></div></article>
+<article class="dish" id="r-もみじ饅頭" data-name="もみじ饅頭" data-ings="あんこ
+メープルシロップ
+卵
+小麦粉
+牛乳180" data-food="1"><header><h3>もみじ饅頭</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●</span><span>満腹度 6</span><span>隠し満腹度 7.2</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button><span class="plus">＋</span><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="牛乳180">牛乳180</button><span class="plus">＋</span><button class="ing" data-q="あんこ">あんこ</button></div></div></article>
+<article class="dish" id="r-ワイン" data-name="ワイン" data-ings="ワインの空き瓶" data-food="1"><header><h3>ワイン</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●◐</span><span>満腹度 3</span><span>隠し満腹度 3.6</span></div><div class="stats"><span class="eff">吐き気 II・10秒</span><span class="eff">再生 II・3分</span></div><div class="way"><div class="method"><span class="tag">ワイン樽</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="ワインの空き瓶">ワインの空き瓶</button></div><p class="note">ブドウ踏み桶で踏んだ果汁を蛇口で樽へ入れ、約3日発酵させてから瓶詰め</p></div></article>
+<article class="dish" id="r-乾燥昆布" data-name="乾燥昆布" data-ings="昆布" data-food="0"><header><h3>乾燥昆布</h3></header><div class="way"><div class="method"><span class="tag">天日干し網</span><span class="sub">9個できる</span></div><div class="ings"><button class="ing" data-q="昆布">昆布<span class=x> ×9</span></button></div><p class="note">晴れた昼に空の見える明るい場所で 2400 カウント（約4.2日）。壊して回収</p></div></article>
+<article class="dish" id="r-刺身" data-name="刺身" data-ings="クマノミ
+フグ
+大根
+生魚
+生鮭" data-food="1"><header><h3>刺身</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●</span><span>満腹度 2</span><span>隠し満腹度 2.4</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="大根">大根</button><span class="plus">＋</span><button class="ing" data-q="生魚">生魚</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="大根">大根</button><span class="plus">＋</span><button class="ing" data-q="生鮭">生鮭</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="大根">大根</button><span class="plus">＋</span><button class="ing" data-q="クマノミ">クマノミ</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="大根">大根</button><span class="plus">＋</span><button class="ing" data-q="フグ">フグ</button></div></div></article>
+<article class="dish" id="r-削り節" data-name="削り節" data-ings="かつお節" data-food="1"><header><h3>削り節</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 1.2</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="かつお節">かつお節</button></div></div></article>
+<article class="dish" id="r-力うどん" data-name="力うどん" data-ings="うどんつゆ
+ネギ
+焼き餅
+茹でたうどん" data-food="1"><header><h3>力うどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="焼き餅">焼き餅</button></div></div></article>
+<article class="dish" id="r-南蛮蕎麦" data-name="南蛮蕎麦" data-ings="うどんつゆ
+ネギ
+焼き鳥
+茹でたそば" data-food="1"><header><h3>南蛮蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="焼き鳥">焼き鳥</button></div></div></article>
+<article class="dish" id="r-印度カレースパイス" data-name="印度カレースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒
+黒胡椒" data-food="0"><header><h3>印度カレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">7個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×7</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×16</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒<span class=x> ×6</span></button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×13</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-印度カレーライス" data-name="印度カレーライス" data-ings="印度カレー
+炊いた餅米" data-food="1"><header><h3>印度カレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">攻撃力上昇 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="印度カレー">印度カレー</button></div></div></article>
+<article class="dish" id="r-印度カレールゥ" data-name="印度カレールゥ" data-ings="印度カレースパイス" data-food="0"><header><h3>印度カレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="印度カレースパイス">印度カレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-危険なワイン" data-name="危険なワイン" data-ings="ネザーウォート
+ワイン" data-food="1"><header><h3>危険なワイン</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">吐き気 III・1分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ワイン">ワイン<span class=x> ×8</span></button><span class="plus">＋</span><button class="ing" data-q="ネザーウォート">ネザーウォート</button></div></div></article>
+<article class="dish" id="r-味噌" data-name="味噌" data-ings="味噌" data-food="0"><header><h3>味噌</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="味噌">味噌</button></div></div></article>
+<article class="dish" id="r-唐辛子" data-name="唐辛子" data-ings="唐辛子の実" data-food="0"><header><h3>唐辛子</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="唐辛子の実">唐辛子の実</button></div><p class="note">燃料が必要</p></div></article>
+<article class="dish" id="r-塾カレースパイス" data-name="塾カレースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒" data-food="0"><header><h3>塾カレースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">8個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×9</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン</button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×12</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×21</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×20</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-塾カレーライス" data-name="塾カレーライス" data-ings="塾カレー
+炊いた餅米" data-food="1"><header><h3>塾カレーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 III</span><span class="eff">水中呼吸 II・5分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="塾カレー">塾カレー</button></div></div></article>
+<article class="dish" id="r-塾カレールゥ" data-name="塾カレールゥ" data-ings="塾カレースパイス" data-food="0"><header><h3>塾カレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="塾カレースパイス">塾カレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-天ぷらうどん" data-name="天ぷらうどん" data-ings="うどんつゆ
+ネギ
+海老天
+茹でたうどん" data-food="1"><header><h3>天ぷらうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●</span><span>満腹度 14</span><span>隠し満腹度 22.4</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="海老天">海老天</button></div></div></article>
+<article class="dish" id="r-天ぷらの衣" data-name="天ぷらの衣" data-ings="卵
+小麦粉
+水バケツ" data-food="0"><header><h3>天ぷらの衣</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button><span class="plus">＋</span><button class="ing" data-q="水バケツ">水バケツ</button></div></div></article>
+<article class="dish" id="r-天ぷら蕎麦" data-name="天ぷら蕎麦" data-ings="うどんつゆ
+ネギ
+海老天
+茹でたそば" data-food="1"><header><h3>天ぷら蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●</span><span>満腹度 14</span><span>隠し満腹度 22.4</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="海老天">海老天</button></div></div></article>
+<article class="dish" id="r-失敗カレーライス" data-name="失敗カレーライス" data-ings="失敗カレー
+炊いた餅米" data-food="0"><header><h3>失敗カレーライス</h3></header><div class="stats"><span>満腹度 -1</span><span>隠し満腹度 -1.2</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="失敗カレー">失敗カレー</button></div></div></article>
+<article class="dish" id="r-失敗カレールゥ" data-name="失敗カレールゥ" data-ings="失敗カレースパイス" data-food="0"><header><h3>失敗カレールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="失敗カレースパイス">失敗カレースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-完成したお好み焼き" data-name="完成したお好み焼き" data-ings="お好み焼き
+ソース
+マヨネーズ" data-food="1"><header><h3>完成したお好み焼き</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●</span><span>満腹度 16</span><span>隠し満腹度 25.6</span></div><div class="stats"><span class="eff">即時回復 I</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="お好み焼き">お好み焼き</button><span class="plus">＋</span><button class="ing" data-q="ソース">ソース</button><span class="plus">＋</span><button class="ing" data-q="マヨネーズ">マヨネーズ</button></div></div></article>
+<article class="dish" id="r-完熟した胡椒の実束" data-name="完熟した胡椒の実束" data-ings="ダイヤモンド
+モミジ木材のかけら" data-food="0"><header><h3>完熟した胡椒の実束</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="モミジ木材のかけら">モミジ木材のかけら</button><span class="plus">＋</span><button class="ing" data-q="ダイヤモンド">ダイヤモンド<span class=x> ×3</span></button></div></div></article>
+<article class="dish" id="r-小麦粉" data-name="小麦粉" data-ings="小麦" data-food="0"><header><h3>小麦粉</h3></header><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="小麦">小麦</button></div></div></article>
+<article class="dish" id="r-岩塩" data-name="岩塩" data-ings="塩のブロック" data-food="0"><header><h3>岩塩</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">8個できる</span></div><div class="ings"><button class="ing" data-q="塩のブロック">塩のブロック</button></div></div></article>
+<article class="dish" id="r-干し柿" data-name="干し柿" data-ings="干し柿 0 [ブロック]" data-food="1"><header><h3>干し柿</h3></header><div class="stats"><span class="shanks" aria-hidden="true">◐</span><span>満腹度 1</span><span>隠し満腹度 0.8</span></div><div class="way"><div class="method"><span class="tag">吊るし干し</span><span class="sub">4個できる</span></div><div class="ings"><button class="ing" data-q="干し柿 0 [ブロック]">干し柿 0 [ブロック]</button></div><p class="note">上にブロックがある場所に吊るす。明るい昼に少しずつ進み、平均約4日で完成。壊して回収</p></div></article>
+<article class="dish" id="r-手打ちうどん" data-name="手打ちうどん" data-ings="コップ一杯の水
+小麦粉
+岩塩
+水バケツ" data-food="0"><header><h3>手打ちうどん</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="小麦粉">小麦粉<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="水バケツ">水バケツ</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="小麦粉">小麦粉<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="コップ一杯の水">コップ一杯の水</button></div></div></article>
+<article class="dish" id="r-手打ちそば" data-name="手打ちそば" data-ings="そば粉
+コップ一杯の水
+小麦粉
+水バケツ" data-food="0"><header><h3>手打ちそば</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="そば粉">そば粉<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="水バケツ">水バケツ</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="そば粉">そば粉<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="小麦粉">小麦粉</button><span class="plus">＋</span><button class="ing" data-q="コップ一杯の水">コップ一杯の水</button></div></div></article>
+<article class="dish" id="r-日干し網[イカ]" data-name="日干し網[イカ]" data-ings="生のイカ" data-food="0"><header><h3>日干し網[イカ]</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="生のイカ">生のイカ<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-日干し網[カツオ]" data-name="日干し網[カツオ]" data-ings="燻したカツオ" data-food="0"><header><h3>日干し網[カツオ]</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="燻したカツオ">燻したカツオ<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-日干し網[昆布]" data-name="日干し網[昆布]" data-ings="昆布" data-food="0"><header><h3>日干し網[昆布]</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="昆布">昆布<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-月見うどん" data-name="月見うどん" data-ings="うどんつゆ
+ネギ
+卵
+茹でたうどん" data-food="1"><header><h3>月見うどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button></div></div></article>
+<article class="dish" id="r-月見蕎麦" data-name="月見蕎麦" data-ings="うどんつゆ
+ネギ
+卵
+茹でたそば" data-food="1"><header><h3>月見蕎麦</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたそば">茹でたそば</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button></div></div></article>
+<article class="dish" id="r-栗" data-name="栗" data-ings="毬栗" data-food="0"><header><h3>栗</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">3個できる</span></div><div class="ings"><button class="ing" data-q="毬栗">毬栗</button></div></div></article>
+<article class="dish" id="r-焼きうどん" data-name="焼きうどん" data-ings="キャベツ
+タマネギ
+ニンジン
+削り節
+岩塩
+焼き豚
+茹でたうどん
+醤油
+黒胡椒" data-food="1"><header><h3>焼きうどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ニンジン">ニンジン</button><span class="plus">＋</span><button class="ing" data-q="タマネギ">タマネギ</button><span class="plus">＋</span><button class="ing" data-q="キャベツ">キャベツ</button><span class="plus">＋</span><button class="ing" data-q="醤油">醤油</button><span class="plus">＋</span><button class="ing" data-q="岩塩">岩塩</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒</button><span class="plus">＋</span><button class="ing" data-q="焼き豚">焼き豚</button><span class="plus">＋</span><button class="ing" data-q="削り節">削り節</button></div></div></article>
+<article class="dish" id="r-焼きナス" data-name="焼きナス" data-ings="ナス" data-food="1"><header><h3>焼きナス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ナス">ナス</button></div></div></article>
+<article class="dish" id="r-焼き栗" data-name="焼き栗" data-ings="栗" data-food="1"><header><h3>焼き栗</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●</span><span>満腹度 4</span><span>隠し満腹度 4.8</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="栗">栗</button></div></div></article>
+<article class="dish" id="r-焼き餅" data-name="焼き餅" data-ings="餅" data-food="1"><header><h3>焼き餅</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●◐</span><span>満腹度 3</span><span>隠し満腹度 3.6</span></div><div class="way"><div class="method"><span class="tag">かまど</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="餅">餅</button></div></div></article>
+<article class="dish" id="r-煮熟したカツオ" data-name="煮熟したカツオ" data-ings="おろしたカツオ" data-food="0"><header><h3>煮熟したカツオ</h3></header><div class="way"><div class="method"><span class="tag">湯煮</span><span class="sub">10分</span></div><div class="ings"><button class="ing" data-q="おろしたカツオ">おろしたカツオ</button></div><p class="note">焚き火 → 鉄ブロック → 水 の順に積み、水の中へおろしたカツオを投げ込む。真下が鉄ブロックであること</p></div></article>
+<article class="dish" id="r-燻したカツオ" data-name="燻したカツオ" data-ings="煮熟したカツオ" data-food="0"><header><h3>燻したカツオ</h3></header><div class="way"><div class="method"><span class="tag">穀物乾燥機</span><span class="sub">5秒</span></div><div class="ings"><button class="ing" data-q="煮熟したカツオ">煮熟したカツオ</button></div><p class="note">燃料が必要（石炭・バイオ燃料など）</p></div></article>
+<article class="dish" id="r-牛乳180" data-name="牛乳180" data-ings="モミジ木材のかけら
+牛乳バケツ" data-food="0"><header><h3>牛乳180</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">16個できる</span></div><div class="ings"><button class="ing" data-q="モミジ木材のかけら">モミジ木材のかけら</button><span class="plus">＋</span><button class="ing" data-q="牛乳バケツ">牛乳バケツ</button></div></div></article>
+<article class="dish" id="r-生うどん" data-name="生うどん" data-ings="手打ちうどん" data-food="0"><header><h3>生うどん</h3></header><div class="way"><div class="method"><span class="tag">手打ち</span><span class="sub">2個できる</span></div><div class="ings"><button class="ing" data-q="手打ちうどん">手打ちうどん</button></div><p class="note">設置して上を歩くかジャンプし続けて 3 分（麺踏み）→ 剣で 100 回左クリック（包丁入れ）→ 右クリックで回収</p></div></article>
+<article class="dish" id="r-生の豚肉" data-name="生の豚肉" data-ings="塩のブロック
+白胡椒のブロック
+腐った肉
+黒胡椒のブロック" data-food="0"><header><h3>生の豚肉</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="塩のブロック">塩のブロック<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="黒胡椒のブロック">黒胡椒のブロック<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="白胡椒のブロック">白胡椒のブロック<span class=x> ×2</span></button><span class="plus">＋</span><button class="ing" data-q="腐った肉">腐った肉</button></div></div></article>
+<article class="dish" id="r-生蕎麦" data-name="生蕎麦" data-ings="手打ちそば" data-food="0"><header><h3>生蕎麦</h3></header><div class="way"><div class="method"><span class="tag">手打ち</span><span class="sub">2個できる</span></div><div class="ings"><button class="ing" data-q="手打ちそば">手打ちそば</button></div><p class="note">手打ちうどんと同じ手順</p></div></article>
+<article class="dish" id="r-白胡椒" data-name="白胡椒" data-ings="完熟した胡椒の実束
+白胡椒のブロック" data-food="0"><header><h3>白胡椒</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">9個できる</span></div><div class="ings"><button class="ing" data-q="白胡椒のブロック">白胡椒のブロック</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="完熟した胡椒の実束">完熟した胡椒の実束</button></div></div></article>
+<article class="dish" id="r-砂利" data-name="砂利" data-ings="丸石" data-food="0"><header><h3>砂利</h3></header><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">10秒</span></div><div class="ings"><button class="ing" data-q="丸石">丸石</button></div><p class="note">岩塩が4%の確率で一緒に出る</p></div></article>
+<article class="dish" id="r-砂糖" data-name="砂糖" data-ings="メープルシロップ" data-food="0"><header><h3>砂糖</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="メープルシロップ">メープルシロップ</button></div></div></article>
+<article class="dish" id="r-破壊のワイン" data-name="破壊のワイン" data-ings="ステーキ
+ワイン" data-food="1"><header><h3>破壊のワイン</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●◐</span><span>満腹度 3</span><span>隠し満腹度 3.6</span></div><div class="stats"><span class="eff">吐き気 II・10秒</span><span class="eff">攻撃力上昇 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ワイン">ワイン</button><span class="plus">＋</span><button class="ing" data-q="ステーキ">ステーキ</button></div></div></article>
+<article class="dish" id="r-素うどん" data-name="素うどん" data-ings="うどんつゆ
+ネギ
+茹でたうどん" data-food="1"><header><h3>素うどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button></div></div></article>
+<article class="dish" id="r-美味しくなったお好み焼き" data-name="美味しくなったお好み焼き" data-ings="削り節
+完成したお好み焼き" data-food="1"><header><h3>美味しくなったお好み焼き</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●</span><span>満腹度 20</span><span>隠し満腹度 32</span></div><div class="stats"><span class="eff">即時回復 II</span><span class="eff">再生 II・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="完成したお好み焼き">完成したお好み焼き</button><span class="plus">＋</span><button class="ing" data-q="削り節">削り節</button></div></div></article>
+<article class="dish" id="r-肉うどん" data-name="肉うどん" data-ings="うどんつゆ
+ステーキ
+ネギ
+茹でたうどん" data-food="1"><header><h3>肉うどん</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●</span><span>満腹度 10</span><span>隠し満腹度 16</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="うどんつゆ">うどんつゆ</button><span class="plus">＋</span><button class="ing" data-q="茹でたうどん">茹でたうどん</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="ステーキ">ステーキ</button></div></div></article>
+<article class="dish" id="r-菌糸" data-name="菌糸" data-ings="土
+茶キノコ
+赤キノコ" data-food="0"><header><h3>菌糸</h3></header><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">10秒</span></div><div class="ings"><button class="ing" data-q="土">土</button><span class="plus">＋</span><button class="ing" data-q="茶キノコ">茶キノコ</button><span class="plus">＋</span><button class="ing" data-q="赤キノコ">赤キノコ</button></div></div></article>
+<article class="dish" id="r-菜種油" data-name="菜種油" data-ings="菜の花の種" data-food="0"><header><h3>菜種油</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="菜の花の種">菜の花の種<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-醤油" data-name="醤油" data-ings="醤油" data-food="0"><header><h3>醤油</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="醤油">醤油</button></div></div></article>
+<article class="dish" id="r-銀座カリースパイス" data-name="銀座カリースパイス" data-ings="カルダモン
+クミン
+シナモン
+スターアニス
+ターメリック
+唐辛子
+白胡椒
+黒胡椒" data-food="0"><header><h3>銀座カリースパイス</h3></header><div class="way"><div class="method"><span class="tag">すり鉢</span><span class="sub">10個できる</span></div><div class="ings"><button class="ing" data-q="カルダモン">カルダモン<span class=x> ×4</span></button><span class="plus">＋</span><button class="ing" data-q="クミン">クミン</button><span class="plus">＋</span><button class="ing" data-q="シナモン">シナモン<span class=x> ×12</span></button><span class="plus">＋</span><button class="ing" data-q="スターアニス">スターアニス<span class=x> ×15</span></button><span class="plus">＋</span><button class="ing" data-q="ターメリック">ターメリック<span class=x> ×26</span></button><span class="plus">＋</span><button class="ing" data-q="唐辛子">唐辛子</button><span class="plus">＋</span><button class="ing" data-q="黒胡椒">黒胡椒<span class=x> ×5</span></button><span class="plus">＋</span><button class="ing" data-q="白胡椒">白胡椒<span class=x> ×21</span></button></div><p class="note">配合の一例（最多量）。詳しくはカレー工房タブを参照</p></div></article>
+<article class="dish" id="r-銀座カリーライス" data-name="銀座カリーライス" data-ings="炊いた餅米
+銀座カリー" data-food="1"><header><h3>銀座カリーライス</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●●●●●●●●●●●●●●●●●</span><span>満腹度 40</span><span>隠し満腹度 64</span></div><div class="stats"><span class="eff">水中呼吸 III・10分</span><span class="eff">暗視 III・10分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button><span class="plus">＋</span><button class="ing" data-q="銀座カリー">銀座カリー</button></div></div></article>
+<article class="dish" id="r-銀座カリールゥ" data-name="銀座カリールゥ" data-ings="銀座カリースパイス" data-food="0"><header><h3>銀座カリールゥ</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="銀座カリースパイス">銀座カリースパイス<span class=x> ×9</span></button></div></div></article>
+<article class="dish" id="r-餅" data-name="餅" data-ings="炊いた餅米" data-food="0"><header><h3>餅</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="炊いた餅米">炊いた餅米</button></div></div></article>
+<article class="dish" id="r-餅米" data-name="餅米" data-ings="籾餅米" data-food="0"><header><h3>餅米</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="籾餅米">籾餅米</button></div></div></article>
+<article class="dish" id="r-魚のすり身" data-name="魚のすり身" data-ings="ジャガイモ
+卵
+生魚" data-food="0"><header><h3>魚のすり身</h3></header><div class="way"><div class="method"><span class="tag">石臼</span><span class="sub">2.5秒・4個できる</span></div><div class="ings"><button class="ing" data-q="生魚">生魚</button><span class="plus">＋</span><button class="ing" data-q="ジャガイモ">ジャガイモ</button><span class="plus">＋</span><button class="ing" data-q="卵">卵</button></div></div></article>
+<article class="dish" id="r-麻婆茄子" data-name="麻婆茄子" data-ings="ナス
+ネギ
+ハンバーグミート
+砂糖
+豆板醤(鉱石辞書 doubanjiang)
+醤油" data-food="1"><header><h3>麻婆茄子</h3></header><div class="stats"><span class="shanks" aria-hidden="true">●●●●</span><span>満腹度 8</span><span>隠し満腹度 12.8</span></div><div class="stats"><span class="eff">火炎耐性 I・3分</span></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="ナス">ナス</button><span class="plus">＋</span><button class="ing" data-q="ハンバーグミート">ハンバーグミート</button><span class="plus">＋</span><button class="ing" data-q="砂糖">砂糖</button><span class="plus">＋</span><button class="ing" data-q="豆板醤(鉱石辞書 doubanjiang)">豆板醤(鉱石辞書 doubanjiang)</button><span class="plus">＋</span><button class="ing" data-q="ネギ">ネギ</button><span class="plus">＋</span><button class="ing" data-q="醤油">醤油</button></div></div></article>
+<article class="dish" id="r-黒胡椒" data-name="黒胡椒" data-ings="緑の胡椒の実束
+黒胡椒のブロック" data-food="0"><header><h3>黒胡椒</h3></header><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub">9個できる</span></div><div class="ings"><button class="ing" data-q="黒胡椒のブロック">黒胡椒のブロック</button></div></div><div class="way"><div class="method"><span class="tag">作業台</span><span class="sub"></span></div><div class="ings"><button class="ing" data-q="緑の胡椒の実束">緑の胡椒の実束</button></div></div></article><p class="note empty" id="empty" hidden>該当するレシピは見つからなかった。</p></div>
+  </section>
+
+  <section id="curry" role="tabpanel" hidden>
+    <p>もみじMODのカレーは、スパイスの配合で16種類（失敗作を含む）に分かれる。すり鉢でスパイスを混ぜたときの「香り」と「味」の合計値で、どの銘柄になるかが決まる。</p>
+    <div class="flow">
+      <div class="step"><b>スパイス</b><small>原料を穀物乾燥機で乾燥（1個5秒）</small></div><span class="arrow">→</span>
+      <div class="step"><b>すり鉢で配合</b><small>クミン・ターメリック・唐辛子は必須。合計個数÷8個のカレースパイスになる</small></div><span class="arrow">→</span>
+      <div class="step"><b>カレールゥ</b><small>同じ銘柄のカレースパイス9個を作業台で</small></div><span class="arrow">→</span>
+      <div class="step"><b>カレー</b><small>調理鍋（水）：ルゥ＋タマネギ・ジャガイモ・生の牛肉・ニンジン（銘柄で具が違う）40秒</small></div><span class="arrow">→</span>
+      <div class="step"><b>カレーライス</b><small>カレー＋炊いた餅米を作業台で</small></div>
+    </div>
+
+    <h2>すり鉢のルール</h2>
+    <div class="cols">
+      <div class="box"><ul>
+        <li>スロットは15個。1スロットにつき使う数を 0〜10 で指定する（同じスパイスを2スロットに入れてもよい）。</li>
+        <li>クミン・ターメリック・唐辛子が1つでも欠けると「必須スパイス不足」で作れない。</li>
+        <li>できる数は使ったスパイスの合計÷8（切り捨て、最低1個）。</li>
+        <li>合計値が下の表のどの範囲にも入らないと「失敗カレースパイス」になる。範囲が重なるときは表の上にあるものが優先される。</li>
+        <li>スターアニスとナツメグは数値が同じなので、配合例ではどちらを使ってもよい。</li>
+      </ul></div>
+      <div class="box">
+        <h3>スパイスの数値（1個あたり）</h3>
+        <div class="tablewrap" style="border:0"><table id="spiceTable"><thead><tr><th>スパイス</th><th>甘い香り</th><th>爽やかな香り</th><th>刺激的な香り</th><th>甘味</th><th>辛味</th><th>苦味</th></tr></thead><tbody><tr><td>オールスパイス</td><td class="num">2</td><td class="num">5</td><td class="num">2</td><td class="num">·</td><td class="num">1</td><td class="num">1</td></tr><tr><td>カルダモン</td><td class="num">1</td><td class="num">4</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td></tr><tr><td>クミン</td><td class="num">3</td><td class="num">4</td><td class="num">7</td><td class="num">·</td><td class="num">2</td><td class="num">2</td></tr><tr><td>クローブ</td><td class="num">·</td><td class="num">·</td><td class="num">3</td><td class="num">3</td><td class="num">·</td><td class="num">·</td></tr><tr><td>コリアンダー</td><td class="num">3</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">2</td><td class="num">·</td></tr><tr><td>シナモン</td><td class="num">·</td><td class="num">3</td><td class="num">·</td><td class="num">1</td><td class="num">·</td><td class="num">·</td></tr><tr><td>スターアニス</td><td class="num">3</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td></tr><tr><td>ターメリック</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">1</td></tr><tr><td>唐辛子</td><td class="num">·</td><td class="num">·</td><td class="num">1</td><td class="num">·</td><td class="num">10</td><td class="num">·</td></tr><tr><td>フェンネル</td><td class="num">3</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">3</td></tr><tr><td>ナツメグ</td><td class="num">3</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td><td class="num">·</td></tr><tr><td>黒胡椒</td><td class="num">·</td><td class="num">·</td><td class="num">1</td><td class="num">·</td><td class="num">4</td><td class="num">·</td></tr><tr><td>白胡椒</td><td class="num">·</td><td class="num">·</td><td class="num">2</td><td class="num">·</td><td class="num">2</td><td class="num">·</td></tr></tbody></table></div>
+      </div>
+    </div>
+
+    <h2>銘柄と配合例</h2>
+    <p class="note">配合例は全通りを計算して見つけた組み合わせで、ゲーム内の判定と同じ計算で検算済み。「最少」は材料が最も少ない配合、「最多」は一度に最も多く作れる配合。</p>
+    <div class="callout"><p><b>作れないカレーがある：</b>ディナー・ゴールデン・ボンの3種は、カレースパイスとルゥまでは作れるが、調理鍋でカレーにできない。調理鍋のレシピは43枠しかないのに46個登録されており、最後の銀座カリーが上書きするため（v1.1.33cの不具合）。そのため、ゴールデン・ボンのカレーライス（満腹度40）はサバイバルでは手に入らない。</p></div>
+    <div class="tablewrap"><table id="curryTable"><thead><tr><th>銘柄</th><th>合計値の範囲（甘い香り / 爽やかな香り / 刺激的な香り / 甘味 / 辛味 / 苦味）</th><th>カレーライスの効果</th><th>最少の配合</th><th>最多の配合</th></tr></thead><tbody><tr><td><b>バーモントカレー</b></td><td class="range">10〜20 / 40〜50 / 35〜45 / 20〜30 / 30〜40 / 5〜15</td><td>満腹度 20<br><span class="eff">即時回復 II</span> <span class="eff">再生 II・3分</span></td><td><div class="blend"><span>オールスパイス×6</span><span>クミン×1</span><span>クローブ×6</span><span>シナモン×2</span><span>ターメリック×1</span><span>唐辛子×2</span><span>白胡椒×1</span></div><span class="range">計19個 → 2個</span></td><td><div class="blend"><span>カルダモン×1</span><span>クミン×1</span><span>クローブ×3</span><span>シナモン×14</span><span>スターアニス×5</span><span>ターメリック×13</span><span>唐辛子×1</span><span>白胡椒×14</span></div><span class="range">計52個 → 6個</span></td></tr><tr><td><b>ジャワカレー</b></td><td class="range">15〜22 / 20〜27 / 30〜37 / 5〜15 / 35〜45 / 13〜16</td><td>満腹度 20<br><span class="eff">即時回復 II</span> <span class="eff">再生 II・3分</span></td><td><div class="blend"><span>カルダモン×2</span><span>クミン×3</span><span>クローブ×2</span><span>ターメリック×1</span><span>唐辛子×3</span><span>フェンネル×2</span></div><span class="range">計13個 → 1個</span></td><td><div class="blend"><span>カルダモン×1</span><span>クミン×1</span><span>シナモン×6</span><span>スターアニス×6</span><span>ターメリック×14</span><span>唐辛子×1</span><span>黒胡椒×1</span><span>白胡椒×14</span></div><span class="range">計44個 → 5個</span></td></tr><tr><td><b>こくまろカレー</b></td><td class="range">25〜32 / 15〜22 / 28〜35 / 0〜0 / 41〜48 / 10〜12</td><td>満腹度 20<br><span class="eff">即時回復 II</span> <span class="eff">再生 II・3分</span></td><td><div class="blend"><span>オールスパイス×2</span><span>クミン×3</span><span>コリアンダー×2</span><span>スターアニス×1</span><span>ターメリック×1</span><span>唐辛子×3</span><span>フェンネル×1</span></div><span class="range">計13個 → 1個</span></td><td><div class="blend"><span>カルダモン×4</span><span>クミン×1</span><span>スターアニス×8</span><span>ターメリック×10</span><span>唐辛子×1</span><span>黒胡椒×3</span><span>白胡椒×12</span></div><span class="range">計39個 → 4個</span></td></tr><tr><td><b>印度カレー</b></td><td class="range">30〜35 / 40〜44 / 32〜40 / 0〜4 / 59〜65 / 10〜18</td><td>満腹度 20<br><span class="eff">即時回復 II</span> <span class="eff">攻撃力上昇 II・3分</span></td><td><div class="blend"><span>オールスパイス×7</span><span>クミン×2</span><span>コリアンダー×4</span><span>ターメリック×1</span><span>唐辛子×4</span></div><span class="range">計18個 → 2個</span></td><td><div class="blend"><span>カルダモン×7</span><span>クミン×1</span><span>シナモン×4</span><span>スターアニス×8</span><span>ターメリック×16</span><span>唐辛子×1</span><span>黒胡椒×6</span><span>白胡椒×13</span></div><span class="range">計56個 → 7個</span></td></tr><tr><td><b>ククレカレー</b></td><td class="range">15〜25 / 5〜12 / 20〜28 / 2〜8 / 22〜30 / 3〜10</td><td>満腹度 20<br><span class="eff">即時回復 II</span> <span class="eff">攻撃力上昇 II・3分</span></td><td><div class="blend"><span>クミン×2</span><span>クローブ×1</span><span>コリアンダー×3</span><span>ターメリック×1</span><span>唐辛子×1</span><span>白胡椒×1</span></div><span class="range">計9個 → 1個</span></td><td><div class="blend"><span>クミン×1</span><span>シナモン×2</span><span>スターアニス×7</span><span>ターメリック×8</span><span>唐辛子×1</span><span>白胡椒×9</span></div><span class="range">計28個 → 3個</span></td></tr><tr><td><b>ザ・ホテル・カレー</b></td><td class="range">38〜45 / 38〜46 / 47〜58 / 3〜10 / 47〜55 / 13〜21</td><td>満腹度 20<br><span class="eff">即時回復 II</span> <span class="eff">攻撃力上昇 II・3分</span></td><td><div class="blend"><span>オールスパイス×4</span><span>クミン×5</span><span>クローブ×1</span><span>コリアンダー×2</span><span>スターアニス×3</span><span>ターメリック×1</span><span>唐辛子×3</span></div><span class="range">計19個 → 2個</span></td><td><div class="blend"><span>カルダモン×3</span><span>クミン×1</span><span>シナモン×10</span><span>スターアニス×13</span><span>ターメリック×19</span><span>唐辛子×1</span><span>白胡椒×21</span></div><span class="range">計68個 → 8個</span></td></tr><tr><td><b>LEEカレー</b></td><td class="range">35〜40 / 21〜27 / 28〜33 / 0〜0 / 65〜80 / 12〜19</td><td>満腹度 20<br><span class="eff">即時回復 III</span> <span class="eff">火炎耐性 II・5分</span></td><td><div class="blend"><span>オールスパイス×1</span><span>カルダモン×1</span><span>クミン×3</span><span>コリアンダー×4</span><span>スターアニス×2</span><span>ターメリック×1</span><span>唐辛子×5</span><span>フェンネル×2</span></div><span class="range">計19個 → 2個</span></td><td><div class="blend"><span>カルダモン×5</span><span>クミン×1</span><span>スターアニス×10</span><span>ターメリック×17</span><span>唐辛子×1</span><span>黒胡椒×13</span><span>白胡椒×6</span></div><span class="range">計53個 → 6個</span></td></tr><tr><td><b>塾カレー</b></td><td class="range">43〜48 / 40〜45 / 43〜48 / 0〜2 / 40〜55 / 18〜23</td><td>満腹度 20<br><span class="eff">即時回復 III</span> <span class="eff">水中呼吸 II・5分</span></td><td><div class="blend"><span>オールスパイス×4</span><span>クミン×5</span><span>コリアンダー×3</span><span>スターアニス×3</span><span>ターメリック×1</span><span>唐辛子×2</span><span>フェンネル×1</span></div><span class="range">計19個 → 2個</span></td><td><div class="blend"><span>カルダモン×9</span><span>クミン×1</span><span>シナモン×1</span><span>スターアニス×12</span><span>ターメリック×21</span><span>唐辛子×1</span><span>白胡椒×20</span></div><span class="range">計65個 → 8個</span></td></tr><tr><td><b>ZEPPINカレー</b></td><td class="range">20〜26 / 18〜23 / 30〜37 / 7〜13 / 33〜38 / 6〜10</td><td>満腹度 20<br><span class="eff">即時回復 III</span> <span class="eff">暗視 II・5分</span></td><td><div class="blend"><span>オールスパイス×1</span><span>クミン×3</span><span>クローブ×2</span><span>コリアンダー×3</span><span>シナモン×1</span><span>ターメリック×1</span><span>唐辛子×2</span></div><span class="range">計13個 → 1個</span></td><td><div class="blend"><span>カルダモン×1</span><span>クミン×1</span><span>クローブ×1</span><span>シナモン×5</span><span>スターアニス×7</span><span>ターメリック×8</span><span>唐辛子×1</span><span>白胡椒×13</span></div><span class="range">計37個 → 4個</span></td></tr><tr><td><b>カレー曜日</b></td><td class="range">15〜22 / 25〜32 / 23〜31 / 5〜9 / 30〜36 / 11〜17</td><td>満腹度 20<br><span class="eff">即時回復 III</span> <span class="eff">火炎耐性 III・10分</span></td><td><div class="blend"><span>オールスパイス×5</span><span>クミン×1</span><span>クローブ×2</span><span>ターメリック×1</span><span>唐辛子×2</span><span>フェンネル×1</span><span>黒胡椒×1</span></div><span class="range">計13個 → 1個</span></td><td><div class="blend"><span>カルダモン×1</span><span>クミン×1</span><span>シナモン×8</span><span>スターアニス×6</span><span>ターメリック×15</span><span>唐辛子×1</span><span>白胡椒×11</span></div><span class="range">計43個 → 5個</span></td></tr><tr><td><b>ドライキーマカレー</b></td><td class="range">20〜26 / 25〜33 / 18〜23 / 2〜5 / 12〜22 / 11〜17</td><td>満腹度 20<br><span class="eff">即時回復 III</span> <span class="eff">水中呼吸 III・10分</span></td><td><div class="blend"><span>オールスパイス×4</span><span>カルダモン×1</span><span>クミン×1</span><span>クローブ×1</span><span>スターアニス×1</span><span>ターメリック×1</span><span>唐辛子×1</span><span>フェンネル×2</span></div><span class="range">計12個 → 1個</span></td><td><div class="blend"><span>カルダモン×5</span><span>クミン×1</span><span>シナモン×3</span><span>スターアニス×6</span><span>ターメリック×15</span><span>唐辛子×1</span><span>白胡椒×5</span></div><span class="range">計36個 → 4個</span></td></tr><tr><td><b>ディナーカレー</b><br><span class="note warn">調理鍋で作れない</span></td><td class="range">28〜33 / 40〜45 / 27〜34 / 0〜3 / 37〜44 / 17〜23</td><td>満腹度 20<br><span class="eff">即時回復 III</span> <span class="eff">暗視 III・10分</span></td><td><div class="blend"><span>オールスパイス×6</span><span>カルダモン×1</span><span>クミン×2</span><span>スターアニス×1</span><span>ターメリック×1</span><span>唐辛子×3</span><span>フェンネル×2</span></div><span class="range">計16個 → 2個</span></td><td><div class="blend"><span>カルダモン×8</span><span>クミン×1</span><span>シナモン×3</span><span>スターアニス×7</span><span>ターメリック×21</span><span>唐辛子×1</span><span>黒胡椒×2</span><span>白胡椒×12</span></div><span class="range">計55個 → 6個</span></td></tr><tr><td><b>ゴールデンカレー</b><br><span class="note warn">調理鍋で作れない</span></td><td class="range">22〜27 / 31〜37 / 44〜50 / 10〜15 / 30〜35 / 10〜14</td><td>満腹度 40<br><span class="eff">再生 III・10分</span> <span class="eff">攻撃力上昇 III・10分</span></td><td><div class="blend"><span>オールスパイス×2</span><span>クミン×5</span><span>クローブ×3</span><span>シナモン×1</span><span>スターアニス×1</span><span>ターメリック×1</span><span>唐辛子×2</span></div><span class="range">計15個 → 1個</span></td><td><div class="blend"><span>カルダモン×8</span><span>クミン×1</span><span>クローブ×5</span><span>スターアニス×5</span><span>ターメリック×12</span><span>唐辛子×1</span><span>白胡椒×11</span></div><span class="range">計43個 → 5個</span></td></tr><tr><td><b>ボンカレー</b><br><span class="note warn">調理鍋で作れない</span></td><td class="range">5〜12 / 9〜15 / 27〜33 / 12〜17 / 12〜17 / 5〜9</td><td>満腹度 40<br><span class="eff">火炎耐性 III・10分</span> <span class="eff">暗視 III・10分</span></td><td><div class="blend"><span>カルダモン×1</span><span>クミン×2</span><span>クローブ×4</span><span>ターメリック×1</span><span>唐辛子×1</span></div><span class="range">計9個 → 1個</span></td><td><div class="blend"><span>カルダモン×2</span><span>クミン×1</span><span>クローブ×5</span><span>シナモン×1</span><span>スターアニス×2</span><span>ターメリック×7</span><span>唐辛子×1</span><span>白胡椒×2</span></div><span class="range">計21個 → 2個</span></td></tr><tr><td><b>銀座カリー</b></td><td class="range">45〜52 / 55〜60 / 50〜55 / 10〜12 / 70〜74 / 25〜28</td><td>満腹度 40<br><span class="eff">水中呼吸 III・10分</span> <span class="eff">暗視 III・10分</span></td><td><div class="blend"><span>オールスパイス×8</span><span>クミン×3</span><span>クローブ×3</span><span>コリアンダー×3</span><span>シナモン×1</span><span>ターメリック×1</span><span>唐辛子×5</span><span>フェンネル×4</span></div><span class="range">計28個 → 3個</span></td><td><div class="blend"><span>カルダモン×4</span><span>クミン×1</span><span>シナモン×12</span><span>スターアニス×15</span><span>ターメリック×26</span><span>唐辛子×1</span><span>黒胡椒×5</span><span>白胡椒×21</span></div><span class="range">計85個 → 10個</span></td></tr></tbody></table></div>
+  </section>
+
+  <section id="tools" role="tabpanel" hidden>
+    <p class="note">道具を押すと、作り方・使い方・注意と、その道具で作れるレシピが開く。</p>
+    <div class="toolgrid" id="toolBoxes"><button class="tile" type="button" aria-expanded="false" aria-controls="tool-0"><b>調理鍋</b><span class="tsum">焚き火にかけて、煮る・炊く・揚げる</span><span class="tcount">対応レシピ 46品</span></button><section class="tpanel" id="tool-0" hidden aria-label="調理鍋"><header><h3>調理鍋</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>鉄インゴット×5＋モミジ木材のかけら（下2段をU字に）。</li></ul><h4>使い方</h4><ul><li><b>焚き火の上</b>に置く。焚き火はモミジ落ち葉を火打石で右クリックして作る。</li><li>水バケツを入れると水32回分。<b>菜種油</b>を入れると油モードになって揚げ物ができる（油も32回分）。</li><li>材料スロットは5つで、入れる順番は関係ない。</li></ul><h4>注意</h4><ul><li>焚き火の上に置かないと動かない。</li><li>v1.1.33c の不具合で、ディナー・ゴールデン・ボンのカレーは作れない（<a href="#curry" data-tab="curry">カレー工房</a>を参照）。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">46品</span></h4><div class="rlinks"><a class="rlink" href="#r-LEEカレー">LEEカレー</a><a class="rlink" href="#r-ZEPPINカレー">ZEPPINカレー</a><a class="rlink" href="#r-あんこ">あんこ</a><a class="rlink" href="#r-イカフライ">イカフライ</a><a class="rlink" href="#r-いかめし">いかめし</a><a class="rlink" href="#r-うどんつゆ">うどんつゆ</a><a class="rlink" href="#r-エビフライ">エビフライ</a><a class="rlink" href="#r-おでん">おでん</a><a class="rlink" href="#r-カレー">カレー</a><a class="rlink" href="#r-カレー曜日">カレー曜日</a><a class="rlink" href="#r-ククレカレー">ククレカレー</a><a class="rlink" href="#r-こくまろカレー">こくまろカレー</a><a class="rlink" href="#r-コロッケ">コロッケ</a><a class="rlink bad" href="#r-ゴールデンカレー">ゴールデンカレー</a><a class="rlink" href="#r-ザ・ホテル・カレー">ザ・ホテル・カレー</a><a class="rlink" href="#r-ジャワカレー">ジャワカレー</a><a class="rlink" href="#r-ぜんざい">ぜんざい</a><a class="rlink" href="#r-ソース">ソース</a><a class="rlink bad" href="#r-ディナーカレー">ディナーカレー</a><a class="rlink" href="#r-トマトケチャップ">トマトケチャップ</a><a class="rlink" href="#r-トンカツ">トンカツ</a><a class="rlink" href="#r-ドライキーマカレー">ドライキーマカレー</a><a class="rlink" href="#r-バーモントカレー">バーモントカレー</a><a class="rlink" href="#r-フライドポテト">フライドポテト</a><a class="rlink" href="#r-ホワイトシチュー">ホワイトシチュー</a><a class="rlink" href="#r-ホワイトソース">ホワイトソース</a><a class="rlink bad" href="#r-ボンカレー">ボンカレー</a><a class="rlink" href="#r-マッシュポテト">マッシュポテト</a><a class="rlink" href="#r-ミートソース">ミートソース</a><a class="rlink" href="#r-ロールキャベツ">ロールキャベツ</a><a class="rlink" href="#r-印度カレー">印度カレー</a><a class="rlink" href="#r-塾カレー">塾カレー</a><a class="rlink" href="#r-失敗カレー">失敗カレー</a><a class="rlink" href="#r-揚げ玉">揚げ玉</a><a class="rlink" href="#r-栗ご飯">栗ご飯</a><a class="rlink" href="#r-油揚げ">油揚げ</a><a class="rlink" href="#r-海老天">海老天</a><a class="rlink" href="#r-炊いた餅米">炊いた餅米</a><a class="rlink" href="#r-焼く前のグラタン">焼く前のグラタン</a><a class="rlink" href="#r-肉じゃが">肉じゃが</a><a class="rlink" href="#r-茹でたうどん">茹でたうどん</a><a class="rlink" href="#r-茹でたそば">茹でたそば</a><a class="rlink" href="#r-赤飯">赤飯</a><a class="rlink" href="#r-銀座カリー">銀座カリー</a><a class="rlink" href="#r-風呂吹き大根">風呂吹き大根</a><a class="rlink" href="#r-鳥の唐揚げ">鳥の唐揚げ</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-1"><b>石臼</b><span class="tsum">材料を挽いて粉にする</span><span class="tcount">対応レシピ 6品</span></button><section class="tpanel" id="tool-1" hidden aria-label="石臼"><header><h3>石臼</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>石×6＋モミジ木材のかけら。</li></ul><h4>使い方</h4><ul><li>材料を挽いて粉などにする。</li><li>水と燃料（石炭・木材など）を使う。</li></ul><h4>注意</h4><ul><li>丸石を挽くと、4%の確率で岩塩も一緒に出る。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">6品</span></h4><div class="rlinks"><a class="rlink" href="#r-そば粉">そば粉</a><a class="rlink" href="#r-パン粉">パン粉</a><a class="rlink" href="#r-小麦粉">小麦粉</a><a class="rlink" href="#r-砂利">砂利</a><a class="rlink" href="#r-菌糸">菌糸</a><a class="rlink" href="#r-魚のすり身">魚のすり身</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-2"><b>すり鉢</b><span class="tsum">スパイスを配合してカレースパイスを作る</span><span class="tcount">対応レシピ 15品</span></button><section class="tpanel" id="tool-2" hidden aria-label="すり鉢"><header><h3>すり鉢</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>石×5＋モミジ木材のかけら。</li></ul><h4>使い方</h4><ul><li>スパイスを配合してカレースパイスを作る。配合の決まりは<a href="#curry" data-tab="curry">カレー工房</a>へ。</li><li>「連続作成」ボタンで、同じ配合を材料が尽きるまで繰り返せる。</li></ul><h4>注意</h4><ul><li>クミン・ターメリック・唐辛子が1つでも欠けると作れない。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">15品</span></h4><div class="rlinks"><a class="rlink" href="#r-LEEカレースパイス">LEEカレースパイス</a><a class="rlink" href="#r-ZEPPINカレースパイス">ZEPPINカレースパイス</a><a class="rlink" href="#r-カレー曜日スパイス">カレー曜日スパイス</a><a class="rlink" href="#r-ククレカレースパイス">ククレカレースパイス</a><a class="rlink" href="#r-こくまろカレースパイス">こくまろカレースパイス</a><a class="rlink" href="#r-ゴールデンカレースパイス">ゴールデンカレースパイス</a><a class="rlink" href="#r-ザ・ホテル・カレースパイス">ザ・ホテル・カレースパイス</a><a class="rlink" href="#r-ジャワカレースパイス">ジャワカレースパイス</a><a class="rlink" href="#r-ディナーカレースパイス">ディナーカレースパイス</a><a class="rlink" href="#r-ドライキーマカレースパイス">ドライキーマカレースパイス</a><a class="rlink" href="#r-バーモントカレースパイス">バーモントカレースパイス</a><a class="rlink" href="#r-ボンカレースパイス">ボンカレースパイス</a><a class="rlink" href="#r-印度カレースパイス">印度カレースパイス</a><a class="rlink" href="#r-塾カレースパイス">塾カレースパイス</a><a class="rlink" href="#r-銀座カリースパイス">銀座カリースパイス</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-3"><b>穀物乾燥機</b><span class="tsum">燃料を使って食材を乾燥させる</span><span class="tcount">対応レシピ 12品</span></button><section class="tpanel" id="tool-3" hidden aria-label="穀物乾燥機"><header><h3>穀物乾燥機</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>石×6＋レンガブロック×2＋モミジ木材のかけら。</li></ul><h4>使い方</h4><ul><li>食材を乾燥させる。6列同時に、1個5秒。</li><li>燃料：石炭1600tick、石炭ブロック16000、ブレイズロッド2400、バイオ燃料12800、原木400、木材300。</li></ul><h4>注意</h4><ul><li>溶岩バケツは燃料にできない。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">12品</span></h4><div class="rlinks"><a class="rlink" href="#r-オールスパイス">オールスパイス</a><a class="rlink" href="#r-カルダモン">カルダモン</a><a class="rlink" href="#r-クミン">クミン</a><a class="rlink" href="#r-クローブ">クローブ</a><a class="rlink" href="#r-コリアンダー">コリアンダー</a><a class="rlink" href="#r-シナモン">シナモン</a><a class="rlink" href="#r-スターアニス">スターアニス</a><a class="rlink" href="#r-ターメリック">ターメリック</a><a class="rlink" href="#r-ナツメグ">ナツメグ</a><a class="rlink" href="#r-フェンネル">フェンネル</a><a class="rlink" href="#r-唐辛子">唐辛子</a><a class="rlink" href="#r-燻したカツオ">燻したカツオ</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-4"><b>天日干し網</b><span class="tsum">晴れた日に食材を天日干しする</span><span class="tcount">対応レシピ 3品</span></button><section class="tpanel" id="tool-4" hidden aria-label="天日干し網"><header><h3>天日干し網</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>干したい素材9個を作業台に並べると、そのまま網になる。</li></ul><h4>使い方</h4><ul><li>右クリックで設置。晴れた昼、空が見えて明るい場所でだけ進む。</li><li>完成したら<b>壊して回収</b>する（9個）。</li></ul><h4>注意</h4><ul><li>未完成のうちに壊すと、進み具合を保ったまま網に戻る。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">3品</span></h4><div class="rlinks"><a class="rlink" href="#r-かつお節">かつお節</a><a class="rlink" href="#r-スルメ">スルメ</a><a class="rlink" href="#r-乾燥昆布">乾燥昆布</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-5"><b>手打ち（うどん・そば）</b><span class="tsum">生地を踏んで切って生麺にする</span><span class="tcount">対応レシピ 4品</span></button><section class="tpanel" id="tool-5" hidden aria-label="手打ち（うどん・そば）"><header><h3>手打ち（うどん・そば）</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>手打ちうどん・手打ちそばを作業台で作る。</li></ul><h4>使い方</h4><ul><li>設置して上を歩くかジャンプし続ける（麺踏み・3分）。</li><li>剣で100回左クリックする（包丁入れ）。</li><li>右クリックで生麺2個を回収。</li></ul><h4>注意</h4><ul><li>麺切包丁は耐久20000の剣。もみじを「うどん職人」モードにすると自動で行う。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">4品</span></h4><div class="rlinks"><a class="rlink" href="#r-生うどん">生うどん</a><a class="rlink" href="#r-生蕎麦">生蕎麦</a><a class="rlink" href="#r-手打ちうどん">手打ちうどん</a><a class="rlink" href="#r-手打ちそば">手打ちそば</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-6"><b>湯煮</b><span class="tsum">焚き火で温めた水で食材を煮る</span><span class="tcount">対応レシピ 1品</span></button><section class="tpanel" id="tool-6" hidden aria-label="湯煮"><header><h3>湯煮</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>焚き火 → 鉄ブロック → 水 の順に積む。</li></ul><h4>使い方</h4><ul><li>食材を水へ投げ込むと、10分（半日）で煮える。</li></ul><h4>注意</h4><ul><li>真下が鉄ブロックでないと煮えない。</li><li>投げ込んだ食材は60分間消えない。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">1品</span></h4><div class="rlinks"><a class="rlink" href="#r-煮熟したカツオ">煮熟したカツオ</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-7"><b>吊るし干し</b><span class="tsum">干し柿ブロックを吊るして干し柿を作る</span><span class="tcount">対応レシピ 1品</span></button><section class="tpanel" id="tool-7" hidden aria-label="吊るし干し"><header><h3>吊るし干し</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>作り方</h4><ul><li>糸＋柿4個で干し柿ブロックを作る。</li></ul><h4>使い方</h4><ul><li>上にブロックがある場所に吊るす。明るい昼に少しずつ進み、平均約4日で完成。</li><li>完成したら壊して回収する。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">1品</span></h4><div class="rlinks"><a class="rlink" href="#r-干し柿">干し柿</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-8"><b>ワイン樽・ブドウ踏み桶</b><span class="tsum">ブドウを踏んで発酵させ、ワインを作る</span><span class="tcount">対応レシピ 1品</span></button><section class="tpanel" id="tool-8" hidden aria-label="ワイン樽・ブドウ踏み桶"><header><h3>ワイン樽・ブドウ踏み桶</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>使い方</h4><ul><li>ブドウ踏み桶（抽出口つき）にブドウを投げ込み、上を歩き続ける（200粒で約6分）。</li><li>蛇口で縦置きのワイン樽へ注ぐ（ブドウ5粒で1本分）。注ぎ終わったら蛇口を外す。</li><li>暗め（明るさ12以下）の場所で約61分（約3日）発酵させる。</li><li>樽のGUIに空き瓶を入れると5秒に1本。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">1品</span></h4><div class="rlinks"><a class="rlink" href="#r-ワイン">ワイン</a></div></div></div></section><button class="tile" type="button" aria-expanded="false" aria-controls="tool-9"><b>シロップ大釜</b><span class="tsum">モミジの木から集めてメープルシロップを作る</span><span class="tcount">対応レシピ 1品</span></button><section class="tpanel" id="tool-9" hidden aria-label="シロップ大釜"><header><h3>シロップ大釜</h3><button class="tclose" type="button" aria-label="閉じる">✕</button></header><div class="tbody"><div class="tleft"><h4>使い方</h4><ul><li>シロップ原木（モミジの木の1/10に付く）の側面にスパイル、その真下にシロップ大釜を置く。</li><li>約14分で満タン。満タンの大釜の真下に焚き火を置くと、100秒で完成。</li></ul></div><div class="tright"><h4>対応レシピ <span class="sub">1品</span></h4><div class="rlinks"><a class="rlink" href="#r-メープルシロップ">メープルシロップ</a></div></div></div></section></div>
+    <h2>ほかのMODとの連携</h2>
+    <p>一部のレシピは、材料をアイテムそのものではなく<b>鉱石辞書名</b>で判定している。同じ鉱石辞書名を登録しているほかのMODのアイテムなら、もみじMODのものの代わりに使える。</p>
+    <div class="callout"><p><b>麻婆茄子には豆板醤を追加するMODが必要：</b>もみじMODは豆板醤を追加しないので、単体では麻婆茄子を作れない。TofuCraft など、鉱石辞書 <code>doubanjiang</code> を登録しているMODを一緒に入れると作れるようになる。</p></div>
+    <div class="tablewrap"><table id="oreTable"><thead><tr><th>材料</th><th>鉱石辞書名</th><th>使うレシピ</th></tr></thead><tbody><tr><td>醤油</td><td><code>bottleSoySauce</code></td><td>焼きうどん、麻婆茄子</td></tr><tr><td>豆板醤</td><td><code>doubanjiang</code></td><td>麻婆茄子</td></tr><tr><td>醤油</td><td><code>foodSoysauce</code></td><td>うどんつゆ</td></tr><tr><td>ネギ</td><td><code>leek</code></td><td>おろし蕎麦、かけ蕎麦、かしわうどん、かつおのたたき、カレーうどん、きつねうどん、きつね蕎麦、コロッケうどん、コロッケ蕎麦、たぬきうどん、たぬき蕎麦、力うどん、南蛮蕎麦、天ぷらうどん、天ぷら蕎麦、月見うどん、月見蕎麦、素うどん、肉うどん、麻婆茄子</td></tr><tr><td>味噌</td><td><code>miso</code></td><td>風呂吹き大根</td></tr><tr><td>餅米</td><td><code>rice</code></td><td>いかめし、栗ご飯、炊いた餅米</td></tr><tr><td>岩塩</td><td><code>salt</code></td><td>ソース、トマトケチャップ、フライドポテト、ホワイトソース、ミートソース、ロールキャベツ、焼きうどん、赤飯、鳥の唐揚げ</td></tr><tr><td>木綿豆腐</td><td><code>tofuMomen</code></td><td>油揚げ</td></tr><tr><td>トマト</td><td><code>tomato</code></td><td>ソース、トマトケチャップ</td></tr></tbody></table></div>
+    <p class="note">TofuCraft は doubanjiang・bottleSoySauce・tofuMomen・leek を登録している（TofuCraft の豆板醤・醤油瓶・木綿豆腐・ネギが使える）。</p>
+  </section>
+
+  <section id="source" role="tabpanel" hidden>
+    <div class="cols" id="sourceBoxes"><div class="box"><h3>草を壊すと出る種</h3><ul><li>籾餅米、あずき豆、キャベツ・ダイコン・菜の花・トマト・ナス・タマネギの種（config の GrassDropsSeeds が true のとき）。</li><li>籾餅米は作業台で餅米になる。</li></ul></div><div class="box"><h3>海と川</h3><ul><li>イカを倒すと：生のイカ（80%）、生のエビ（1/3）。</li><li>カツオ：釣りで釣れる（魚のうち約2割）。</li><li>昆布：水底の石・土・砂の上で育つ。胞子は村人（金1→4個）かガチャで手に入る。</li></ul></div><div class="box"><h3>胡椒</h3><ul><li>耕地に胡椒の支柱を立て、完熟した胡椒の実束で右クリックして植える。</li><li>もみじ用ハサミで収穫：緑の実束→黒胡椒、完熟した実束→白胡椒。</li><li>完熟した実束は村人（ダイヤ）か、モミジ木材のかけら＋ダイヤ×3で手に入る。砂漠・雪原・メサでは育たない。</li></ul></div><div class="box"><h3>木になるもの</h3><ul><li>栗：黄緑のモミジの葉の下に毬栗がなる。毬栗は作業台で栗3個。</li><li>柿：柿の木になる。糸＋柿4個で干し柿ブロックにして吊るす。</li><li>バニラ：添え木に植えてハサミで莢を取り、かまどでバニラビーンズに。</li><li>スパイスの木（オールスパイス・クローブ・シナモン・スターアニス・ナツメグ）は森とサバンナに生える。</li></ul></div><div class="box"><h3>村人とチェスト</h3><ul><li>農民：金1→ネギ4／木綿豆腐4、小麦16→醤油／味噌、金3〜5→グレープの種。</li><li>廃坑・寺院・鍛冶屋・ダンジョンのチェストに、ネギ・木綿豆腐・カレースパイス・醤油・味噌が入っていることがある。</li></ul></div><div class="box"><h3>ガチャ</h3><ul><li>モミジ木材のかけら＋金塊＋小麦の種→[木綿豆腐]、＋サトウキビ→[ネギ]、＋金塊×2＋生魚→[昆布の胞子]。</li><li>雪玉のように投げると、1/9の確率で中身が出る。</li></ul></div><div class="box"><h3>ブタから</h3><ul><li>メープルダイヤのクワを持ってブタを倒すと、10%の確率でそばの種・クミンの種・ターメリックの根のいずれかが出る。</li></ul></div></div>
+  </section>
+
+  <footer>
+    数値は v1.1.33c のゲーム内データをもとにしたもの。時間は 20tick＝1秒、1日＝20分で換算。ランダムtickで進む工程（干し柿など）は平均値。配布フォーラムが閉鎖されており公式の解説は読めないため、ゲーム内の挙動と食い違う場合は実際の挙動が正しい。
+    <p class="credit">このページは <a href="../">もみじMOD 非公式Wiki</a> の一部です。もみじMOD（MapleTree）の作者は ecru 氏。有志が作った<b>非公式</b>のファンサイトで、作者とは関係ありません。MODの画像やファイルは掲載していません。</p>
+  </footer>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const cards = [...document.querySelectorAll('#list .dish')];
+let filter = 'eat';
+function render(){
+  const q = $('#q').value.trim();
+  let n = 0;
+  for (const c of cards){
+    const show = q ? (c.dataset.name.includes(q) || c.dataset.ings.includes(q))
+                   : (filter === 'all' || (filter === 'eat') === (c.dataset.food === '1'));
+    c.hidden = !show; if (show) n++;
+  }
+  $('#empty').hidden = n > 0;
+  $('#count').textContent = `${n} 件${q ? '（全カテゴリから検索）' : ''}`;
+}
+function setFilter(f){
+  filter = f;
+  document.querySelectorAll('#filters .chip').forEach(c => c.setAttribute('aria-pressed', String(c.dataset.f === f)));
+}
+$('#q').addEventListener('input', render);
+$('#filters').addEventListener('click', e => {
+  const b = e.target.closest('.chip'); if (!b) return;
+  setFilter(b.dataset.f); render();
+});
+$('#list').addEventListener('click', e => {
+  const b = e.target.closest('.ing'); if (!b) return;
+  $('#q').value = b.dataset.q; render(); window.scrollTo({top: $('#dishes').offsetTop - 60});
+});
+
+// tabs
+const TABS = ['dishes','curry','tools','source'];
+function showTab(id){
+  document.querySelectorAll('nav.tabs button').forEach(b => b.setAttribute('aria-selected', String(b.dataset.panel === id)));
+  document.querySelectorAll('[role=tabpanel]').forEach(p => p.hidden = p.id !== id);
+  try{ localStorage.setItem('momiji-tab', id); }catch(_){}
+}
+document.querySelector('nav.tabs').addEventListener('click', e => { const b = e.target.closest('button'); if (b) showTab(b.dataset.panel); });
+
+// 道具タイル: 押すとその行の下に詳細を全幅で開く（一度に1つ）
+function closeTools(){
+  document.querySelectorAll('#toolBoxes .tile').forEach(t => t.setAttribute('aria-expanded', 'false'));
+  document.querySelectorAll('#toolBoxes .tpanel').forEach(p => p.hidden = true);
+}
+$('#toolBoxes').addEventListener('click', e => {
+  const tile = e.target.closest('.tile');
+  if (tile){
+    const open = tile.getAttribute('aria-expanded') === 'true';
+    closeTools();
+    if (!open){
+      tile.setAttribute('aria-expanded', 'true');
+      const p = document.getElementById(tile.getAttribute('aria-controls'));
+      p.hidden = false;
+      p.scrollIntoView({block: 'nearest'});
+    }
+    return;
+  }
+  if (e.target.closest('.tclose')){
+    const p = e.target.closest('.tpanel');
+    closeTools();
+    document.querySelector(`[aria-controls="${p.id}"]`).focus();
+  }
+});
+
+// #curry などのタブ名、#r-料理名 で料理カードへ
+function showRecipe(card){
+  showTab('dishes');
+  $('#q').value = '';
+  if (filter !== 'all' && (filter === 'eat') !== (card.dataset.food === '1')) setFilter('all');
+  render();
+  card.scrollIntoView({block: 'start'});
+  card.classList.add('flash');
+  setTimeout(() => card.classList.remove('flash'), 1600);
+}
+function route(){
+  let h = location.hash.slice(1);
+  try{ h = decodeURIComponent(h); }catch(_){}
+  if (TABS.includes(h)){ showTab(h); window.scrollTo({top: 0}); return true; }
+  const card = h.startsWith('r-') && document.getElementById(h);
+  if (card && card.classList.contains('dish')){ showRecipe(card); return true; }
+  return false;
+}
+window.addEventListener('hashchange', route);
+document.addEventListener('click', e => {
+  const a = e.target.closest('a[href^="#"]'); if (!a) return;
+  if (a.getAttribute('href') === location.hash || decodeURIComponent(a.hash) === decodeURIComponent(location.hash)){ e.preventDefault(); route(); }
+});
+
+render();
+if (!route()){
+  let initial = null;
+  try{ initial = localStorage.getItem('momiji-tab'); }catch(_){}
+  if (TABS.includes(initial)) showTab(initial);
+}
+</script>
+</body>
+</html>

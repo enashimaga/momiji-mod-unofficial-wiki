@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://enashimaga.github.io/momiji-mod-unofficial-wiki/sitemap.xml
